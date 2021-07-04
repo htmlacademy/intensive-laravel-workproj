@@ -1,0 +1,390 @@
+FORMAT: 1A
+HOST: https://laravel-api-intensive.localhost
+
+# API Documentation
+
+# Group Auth
+
+Этот раздел описывает методы регистрации и аутентификации пользователя
+
+## Регистрация пользователя [POST /api/register]
+
+Регистрация нового пользователя для получения доступа к персональной части сайта.
+
++ Request (application/json)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+        + file: file (object, optional) - файл с изображением аватара // todo починить
+
++ Response 201 (application/json)
+
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "name": [
+                    "The name field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
+## Авторизация [POST /api/login]
+
++ Request (application/json)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + password: 12345678 (required) - пароль
+
++ Response 200 (application/json)
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
++ Request (application/json)
+
+        {
+            "email": "notexisted@example.com",
+            "password": "123"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "These credentials do not match our records."
+                ]
+            }
+        }
+
+## Выход [POST /api/logout]
+
++ Request (application/json)
+
++ Response 204 (application/json)
+
+## Запрос сброса пароля [POST /api/forgot-password]
+
++ Request (application/json)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+
++ Response 200 (application/json)
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "The email field is required."
+                ]
+            }
+        }
+
++ Request (application/json)
+
+        {
+            "email": "notexisted@example.com"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "We can't find a user with that email address."
+                ]
+            }
+        }
+
+## Изменение пароля [POST /api/reset-password]
+
++ Request (application/json)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + token: fdedxx7788 (required) - код из письма
+        + password: 12345678 (required) - новый пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 200 (application/json)
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "token": [
+                    "The token field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
++ Request (application/json)
+
+        {
+            "email": "mail@example.com",
+            "token": "123456",
+            "password":"123456"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "This password reset token is invalid."
+                ]
+            }
+        }
+
+
+# Group Shows
+
+## Получение списка сериалов [GET /shows]
+
+Получение списка сериалов с пагинацией по 20 элементов.
+
++ Request (application/json)
+    + Attributes
+        + page: 1 (number, optional) - номер страницы
+        + order_by: rating (optional) - правило сортировки
+        + order_to: desc (optional) - направление сортировки
+        + genre: null (optional) - фильтрация по жанру
+        + search: null (optional) - фильтрация по имени
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "titleOriginal": "string",
+                "status": "string",
+                "year": 0,
+                "rating": 0,
+                "totalSeasons": 0,
+                "totalEpisodes": 0,
+                "watchStatus": "string",
+                "watchedEpisodes": 0
+            },
+        ]
+
+## Получение списка жанров [GET /genres]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+            "id": 0,
+            "title": "string"
+            },
+        ]
+
+## Получение списка эпизодов сериала [GET /shows/{show}/episodes]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "showId": 0,
+                "seasonNumber": 0,
+                "episodeNumber": 0,
+                "airDate": "string",
+                "commentsCount": 0,
+                "watchStatus": "string",
+            },
+        ]
+
+## Получение информации об эпизоде [GET /episode/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизод.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "id": 0,
+            "title": "string",
+            "showId": 0,
+            "seasonNumber": 0,
+            "episodeNumber": 0,
+            "airDate": "string",
+            "commentsCount": 0,
+            "watchStatus": "string",
+        }
+
+## Получение списка комментариев эпизода [GET /episode/{episode}/comments]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизод.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "count": 0,
+            "comments": [
+                {
+                    "id": 0,
+                    "user": {
+                        "login": "string",
+                        "avatar": "string",
+                    },
+                    "comment": "string",
+                    "parentId": 0,
+                    "createdAt": "string",
+                },
+            ]
+        }
+
+## Добавление комментария к эпизоду [POST /episode/{episode}/comments/{comment}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизод.
+    + comment: `1` (number, optional) - id идентификатор комментария, для ответа.
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
+## Запрос на добавление сериала [POST /shows]
+
++ Request (application/json)
+    + Attributes
+        + imdb: tt0944947 (string, required) - imdb id вида tt0944947
+
++ Response 201 (application/json)
+
++ Request (application/json)
+
+        {
+            "imdb": "tt0944947"
+        }
+
++ Response 422 (application/json)
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "imdb": [
+                    "This show already exists."
+                ]
+            }
+        }
+
++ Request (application/json)
+
+        {
+            "imdb": "944947"
+        }
+
++ Response 422 (application/json)
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "imdb": [
+                    "This imdb is invalid."
+                ]
+            }
+        }
+
+# Group UserArea
+
+## Получение списка просматриваемых сериалов пользователя [GET /user/shows]
+
+Метод возвращает сериалы пользователя без пагинации.
+Вместе с каждым сериалом возвращается информация о количестве просмотренных эпизодов и количестве вышедших серий -
+на основании этой информации можно принять решение о необходимости получения списка не просмотренных серий.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+        {
+                "id": 0,
+                "title": "string",
+                "titleOriginal": "string",
+                "status": "string",
+                "year": 0,
+                "rating": 0,
+                "totalSeasons": 0,
+                "totalEpisodes": 0,
+                "watchStatus": "string",
+                "watchedEpisodes": 0
+            }
+
+## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /user/shows/{show}/new-episodes]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "showId": 0,
+                "seasonNumber": 0,
+                "episodeNumber": 0,
+                "airDate": "string",
+                "commentsCount": 0,
+                "watchStatus": "string",
+            },
+        ]
+
+// todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации
+
+// документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html`
