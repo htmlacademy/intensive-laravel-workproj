@@ -19,16 +19,44 @@ HOST: https://laravel-api-intensive.localhost
 
 Регистрация нового пользователя для получения доступа к персональной части сайта.
 
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
 + Request (application/json)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
         + password: 12345678 (required) - пароль
         + password_confirmation: 12345678 (required) - подтверждение пароля
-        + file: file (object, optional) - файл с изображением аватара // todo починить
 
 + Response 201 (application/json)
 
++ Request (multipart/form-data; boundary={boundary value})
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 201 (application/json)
 
 + Request (application/json)
 
@@ -50,6 +78,9 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 ## Авторизация [POST /api/login]
+
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Request (application/json)
     + Attributes
@@ -94,11 +125,17 @@ HOST: https://laravel-api-intensive.localhost
 
 ## Выход [POST /api/logout]
 
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
 + Request (application/json)
 
 + Response 204 (application/json)
 
 ## Запрос сброса пароля [POST /api/forgot-password]
+
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Request (application/json)
     + Attributes
@@ -137,6 +174,9 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 ## Изменение пароля [POST /api/reset-password]
+
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Request (application/json)
     + Attributes
@@ -298,6 +338,9 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 ## Добавление комментария к эпизоду [POST /episode/{episode}/comments/{comment}]
+
++ Headers
+    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизод.
