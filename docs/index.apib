@@ -19,10 +19,9 @@ HOST: https://laravel-api-intensive.localhost
 
 Регистрация нового пользователя для получения доступа к персональной части сайта.
 
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
@@ -32,6 +31,9 @@ HOST: https://laravel-api-intensive.localhost
 + Response 201 (application/json)
 
 + Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
 
         --{boundary value}
         Content-Disposition: form-data; name="email"
@@ -59,6 +61,8 @@ HOST: https://laravel-api-intensive.localhost
 + Response 201 (application/json)
 
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Response 422 (application/json)
 
@@ -79,10 +83,9 @@ HOST: https://laravel-api-intensive.localhost
 
 ## Авторизация [POST /api/login]
 
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + password: 12345678 (required) - пароль
@@ -90,6 +93,8 @@ HOST: https://laravel-api-intensive.localhost
 + Response 200 (application/json)
 
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Response 422 (application/json)
 
@@ -106,7 +111,9 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 + Request (application/json)
-
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
         {
             "email": "notexisted@example.com",
             "password": "123"
@@ -125,106 +132,11 @@ HOST: https://laravel-api-intensive.localhost
 
 ## Выход [POST /api/logout]
 
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
 
 + Response 204 (application/json)
-
-## Запрос сброса пароля [POST /api/forgot-password]
-
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
-+ Request (application/json)
-    + Attributes
-        + email: mail@example.com (required) - email адрес пользователя
-
-+ Response 200 (application/json)
-
-+ Request (application/json)
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "email": [
-                    "The email field is required."
-                ]
-            }
-        }
-
-+ Request (application/json)
-
-        {
-            "email": "notexisted@example.com"
-        }
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "email": [
-                    "We can't find a user with that email address."
-                ]
-            }
-        }
-
-## Изменение пароля [POST /api/reset-password]
-
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
-+ Request (application/json)
-    + Attributes
-        + email: mail@example.com (required) - email адрес пользователя
-        + token: fdedxx7788 (required) - код из письма
-        + password: 12345678 (required) - новый пароль
-        + password_confirmation: 12345678 (required) - подтверждение пароля
-
-+ Response 200 (application/json)
-
-+ Request (application/json)
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "token": [
-                    "The token field is required."
-                ],
-                "email": [
-                    "The email field is required."
-                ],
-                "password": [
-                    "The password field is required."
-                ]
-            }
-        }
-
-+ Request (application/json)
-
-        {
-            "email": "mail@example.com",
-            "token": "123456",
-            "password":"123456"
-        }
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "email": [
-                    "This password reset token is invalid."
-                ]
-            }
-        }
-
 
 # Group Shows
 
@@ -295,7 +207,7 @@ HOST: https://laravel-api-intensive.localhost
 ## Получение информации об эпизоде [GET /episode/{episode}]
 
 + Parameters
-    + episode: `1` (number) - id идентификатор эпизод.
+    + episode: `1` (number) - id идентификатор эпизода.
 
 + Request (application/json)
 
@@ -315,7 +227,7 @@ HOST: https://laravel-api-intensive.localhost
 ## Получение списка комментариев эпизода [GET /episode/{episode}/comments]
 
 + Parameters
-    + episode: `1` (number) - id идентификатор эпизод.
+    + episode: `1` (number) - id идентификатор эпизода.
 
 + Request (application/json)
 
@@ -339,30 +251,37 @@ HOST: https://laravel-api-intensive.localhost
 
 ## Добавление комментария к эпизоду [POST /episode/{episode}/comments/{comment}]
 
-+ Headers
-    X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-
 + Parameters
     + episode: `1` (number) - id идентификатор эпизод.
     + comment: `1` (number, optional) - id идентификатор комментария, для ответа.
 
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "content": "text"
+        }
 
 + Response 201 (application/json)
 
 ## Запрос на добавление сериала [POST /shows]
 
 + Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
     + Attributes
         + imdb: tt0944947 (string, required) - imdb id вида tt0944947
 
 + Response 201 (application/json)
 
 + Request (application/json)
-
-        {
-            "imdb": "tt0944947"
-        }
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+    {
+        "imdb": "tt0944947"
+    }
 
 + Response 422 (application/json)
         {
@@ -375,10 +294,12 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 + Request (application/json)
-
-        {
-            "imdb": "944947"
-        }
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body            
+    {
+        "imdb": "944947"
+    }
 
 + Response 422 (application/json)
         {
@@ -435,6 +356,80 @@ HOST: https://laravel-api-intensive.localhost
                 "watchStatus": "string",
             },
         ]
+
+## Добавление сериала в список просматриваемых [POST /user/shows/watch/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 201 (application/json)
+
+
+## Удаление сериала из списка просматриваемых [DELETE /user/shows/watch/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
+## Добавление эпизода в список просмотренных [POST /user/episodes/watch/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 201 (application/json)
+
+## Удаление эпизода из списка просмотренных [DELETE /user/episodes/watch/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
+## Добавление оценки сериалу [POST /user/shows/rating/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "rating": 5
+        }
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "rating": 10
+        }
+
++ Response 422 (application/json)
+    {
+        "message": "The given data was invalid.",
+        "errors": {
+            "rating": [
+                "The rating field must be between 1 and 5."
+            ]
+        }
+    }
 
 // todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации
 
