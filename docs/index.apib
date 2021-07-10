@@ -138,9 +138,73 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 204 (application/json)
 
+## Обновление профиля [PATCH /api/register]
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 201 (application/json)
+
++ Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "name": [
+                    "The name field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
 # Group Shows
 
-## Получение списка сериалов [GET /shows]
+## Получение списка сериалов [GET /api/shows]
 
 Получение списка сериалов с пагинацией по 20 элементов.
 
@@ -169,7 +233,29 @@ HOST: https://laravel-api-intensive.localhost
             },
         ]
 
-## Получение списка жанров [GET /genres]
+## Получение информации о сериале [GET /api/shows/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "id": 0,
+            "title": "string",
+            "titleOriginal": "string",
+            "status": "string",
+            "year": 0,
+            "rating": 0,
+            "totalSeasons": 0,
+            "totalEpisodes": 0,
+            "watchStatus": "string",
+            "watchedEpisodes": 0
+        }
+
+## Получение списка жанров [GET /api/genres]
 
 + Request (application/json)
 
@@ -182,7 +268,7 @@ HOST: https://laravel-api-intensive.localhost
             },
         ]
 
-## Получение списка эпизодов сериала [GET /shows/{show}/episodes]
+## Получение списка эпизодов сериала [GET /api/shows/{show}/episodes]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
@@ -204,7 +290,7 @@ HOST: https://laravel-api-intensive.localhost
             },
         ]
 
-## Получение информации об эпизоде [GET /episode/{episode}]
+## Получение информации об эпизоде [GET /api/episode/{episode}]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизода.
@@ -224,7 +310,7 @@ HOST: https://laravel-api-intensive.localhost
             "watchStatus": "string",
         }
 
-## Получение списка комментариев эпизода [GET /episode/{episode}/comments]
+## Получение списка комментариев эпизода [GET /api/episode/{episode}/comments]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизода.
@@ -249,7 +335,7 @@ HOST: https://laravel-api-intensive.localhost
             ]
         }
 
-## Добавление комментария к эпизоду [POST /episode/{episode}/comments/{comment}]
+## Добавление комментария к эпизоду [POST /api/episode/{episode}/comments/{comment}]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизод.
@@ -265,7 +351,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Запрос на добавление сериала [POST /shows]
+## Запрос на добавление сериала [POST /api/shows]
 
 + Request (application/json)
     + Headers
@@ -313,7 +399,7 @@ HOST: https://laravel-api-intensive.localhost
 
 # Group UserArea
 
-## Получение списка просматриваемых сериалов пользователя [GET /user/shows]
+## Получение списка просматриваемых сериалов пользователя [GET /api/user/shows]
 
 Метод возвращает сериалы пользователя без пагинации.
 Вместе с каждым сериалом возвращается информация о количестве просмотренных эпизодов и количестве вышедших серий -
@@ -335,7 +421,7 @@ HOST: https://laravel-api-intensive.localhost
                 "watchedEpisodes": 0
             }
 
-## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /user/shows/{show}/new-episodes]
+## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
@@ -357,7 +443,7 @@ HOST: https://laravel-api-intensive.localhost
             },
         ]
 
-## Добавление сериала в список просматриваемых [POST /user/shows/watch/{show}]
+## Добавление сериала в список просматриваемых [POST /api/user/shows/watch/{show}]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
@@ -369,7 +455,7 @@ HOST: https://laravel-api-intensive.localhost
 + Response 201 (application/json)
 
 
-## Удаление сериала из списка просматриваемых [DELETE /user/shows/watch/{show}]
+## Удаление сериала из списка просматриваемых [DELETE /api/user/shows/watch/{show}]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
@@ -378,7 +464,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Добавление эпизода в список просмотренных [POST /user/episodes/watch/{episode}]
+## Добавление эпизода в список просмотренных [POST /api/user/episodes/watch/{episode}]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизода.
@@ -389,7 +475,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Удаление эпизода из списка просмотренных [DELETE /user/episodes/watch/{episode}]
+## Удаление эпизода из списка просмотренных [DELETE /api/user/episodes/watch/{episode}]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизода.
@@ -398,7 +484,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Добавление оценки сериалу [POST /user/shows/rating/{show}]
+## Добавление оценки сериалу [POST /api/user/shows/rating/{show}]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
