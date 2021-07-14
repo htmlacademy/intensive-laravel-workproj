@@ -1,0 +1,522 @@
+FORMAT: 1A
+HOST: https://laravel-api-intensive.localhost
+
+# API Documentation
+
+# Group Auth
+
+Этот раздел описывает методы регистрации и аутентификации пользователя
+
+## Получение CSRF Token [GET /api/token]
+
+Установка CSRF токена в `XSRF-TOKEN` cookie.
+
++ Request (application/json)
+
++ Response 204 (application/json)
+
+## Регистрация пользователя [POST /api/register]
+
+Регистрация нового пользователя для получения доступа к персональной части сайта.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 201 (application/json)
+
++ Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "name": [
+                    "The name field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
+## Авторизация [POST /api/login]
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + password: 12345678 (required) - пароль
+
++ Response 200 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "email": "notexisted@example.com",
+            "password": "123"
+        }
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "email": [
+                    "These credentials do not match our records."
+                ]
+            }
+        }
+
+## Выход [POST /api/logout]
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 204 (application/json)
+
+## Обновление профиля [PATCH /api/register]
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 201 (application/json)
+
++ Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "name": [
+                    "The name field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
+# Group Shows
+
+## Получение списка сериалов [GET /api/shows]
+
+Получение списка сериалов с пагинацией по 20 элементов.
+
++ Request (application/json)
+    + Attributes
+        + page: 1 (number, optional) - номер страницы
+        + order_by: rating (optional) - правило сортировки
+        + order_to: desc (optional) - направление сортировки
+        + genre: null (optional) - фильтрация по жанру
+        + search: null (optional) - фильтрация по имени
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "titleOriginal": "string",
+                "status": "string",
+                "year": 0,
+                "rating": 0,
+                "totalSeasons": 0,
+                "totalEpisodes": 0,
+                "watchStatus": "string",
+                "watchedEpisodes": 0
+            },
+        ]
+
+## Получение информации о сериале [GET /api/shows/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "id": 0,
+            "title": "string",
+            "titleOriginal": "string",
+            "status": "string",
+            "year": 0,
+            "rating": 0,
+            "totalSeasons": 0,
+            "totalEpisodes": 0,
+            "watchStatus": "string",
+            "watchedEpisodes": 0
+        }
+
+## Получение списка жанров [GET /api/genres]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+            "id": 0,
+            "title": "string"
+            },
+        ]
+
+## Получение списка эпизодов сериала [GET /api/shows/{show}/episodes]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "showId": 0,
+                "seasonNumber": 0,
+                "episodeNumber": 0,
+                "airDate": "string",
+                "commentsCount": 0,
+                "watchStatus": "string",
+            },
+        ]
+
+## Получение информации об эпизоде [GET /api/episode/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "id": 0,
+            "title": "string",
+            "showId": 0,
+            "seasonNumber": 0,
+            "episodeNumber": 0,
+            "airDate": "string",
+            "commentsCount": 0,
+            "watchStatus": "string",
+        }
+
+## Получение списка комментариев эпизода [GET /api/episode/{episode}/comments]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        {
+            "count": 0,
+            "comments": [
+                {
+                    "id": 0,
+                    "user": {
+                        "login": "string",
+                        "avatar": "string",
+                    },
+                    "comment": "string",
+                    "parentId": 0,
+                    "createdAt": "string",
+                },
+            ]
+        }
+
+## Добавление комментария к эпизоду [POST /api/episode/{episode}/comments/{comment}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизод.
+    + comment: `1` (number, optional) - id идентификатор комментария, для ответа.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "content": "text"
+        }
+
++ Response 201 (application/json)
+
+## Запрос на добавление сериала [POST /api/shows]
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Attributes
+        + imdb: tt0944947 (string, required) - imdb id вида tt0944947
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+    {
+        "imdb": "tt0944947"
+    }
+
++ Response 422 (application/json)
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "imdb": [
+                    "This show already exists."
+                ]
+            }
+        }
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body            
+    {
+        "imdb": "944947"
+    }
+
++ Response 422 (application/json)
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "imdb": [
+                    "This imdb is invalid."
+                ]
+            }
+        }
+
+# Group UserArea
+
+## Получение списка просматриваемых сериалов пользователя [GET /api/user/shows]
+
+Метод возвращает сериалы пользователя без пагинации.
+Вместе с каждым сериалом возвращается информация о количестве просмотренных эпизодов и количестве вышедших серий -
+на основании этой информации можно принять решение о необходимости получения списка не просмотренных серий.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+        {
+                "id": 0,
+                "title": "string",
+                "titleOriginal": "string",
+                "status": "string",
+                "year": 0,
+                "rating": 0,
+                "totalSeasons": 0,
+                "totalEpisodes": 0,
+                "watchStatus": "string",
+                "watchedEpisodes": 0
+            }
+
+## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 0,
+                "title": "string",
+                "showId": 0,
+                "seasonNumber": 0,
+                "episodeNumber": 0,
+                "airDate": "string",
+                "commentsCount": 0,
+                "watchStatus": "string",
+            },
+        ]
+
+## Добавление сериала в список просматриваемых [POST /api/user/shows/watch/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 201 (application/json)
+
+
+## Удаление сериала из списка просматриваемых [DELETE /api/user/shows/watch/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
+## Добавление эпизода в список просмотренных [POST /api/user/episodes/watch/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+
++ Response 201 (application/json)
+
+## Удаление эпизода из списка просмотренных [DELETE /api/user/episodes/watch/{episode}]
+
++ Parameters
+    + episode: `1` (number) - id идентификатор эпизода.
+
++ Request (application/json)
+
++ Response 201 (application/json)
+
+## Добавление оценки сериалу [POST /api/user/shows/rating/{show}]
+
++ Parameters
+    + show: `1` (number) - id идентификатор сериала.
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "rating": 5
+        }
+
++ Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
+    + Body
+        {
+            "rating": 10
+        }
+
++ Response 422 (application/json)
+    {
+        "message": "The given data was invalid.",
+        "errors": {
+            "rating": [
+                "The rating field must be between 1 and 5."
+            ]
+        }
+    }
+
+// todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации
+
+// документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html`
