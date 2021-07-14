@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/shows', [\App\Http\Controllers\ShowController::class, 'index'])->name('shows.index');
+Route::get('/shows/{show}', [\App\Http\Controllers\ShowController::class, 'show'])->name('shows.show');
