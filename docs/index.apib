@@ -228,6 +228,12 @@ HOST: https://laravel-api-intensive.localhost
                 "rating": 0,
                 "totalSeasons": 0,
                 "totalEpisodes": 0,
+                "genres": [
+                    {
+                        "id": 0,
+                        "title": "string"
+                    },
+                ],
                 "watchStatus": "string",
                 "watchedEpisodes": 0
             },
@@ -251,6 +257,12 @@ HOST: https://laravel-api-intensive.localhost
             "rating": 0,
             "totalSeasons": 0,
             "totalEpisodes": 0,
+            "genres": [
+                {
+                    "id": 0,
+                    "title": "string"
+                },
+            ],
             "watchStatus": "string",
             "watchedEpisodes": 0
         }
@@ -382,7 +394,7 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
     + Headers
         X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-    + Body            
+    + Body
     {
         "imdb": "944947"
     }

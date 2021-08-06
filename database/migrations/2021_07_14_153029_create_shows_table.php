@@ -21,8 +21,9 @@ class CreateShowsTable extends Migration
             $table->integer('year');
             $table->integer('votes');
             $table->integer('rating');
+            $table->string('status');
             $table->string('imdbId')->nullable();
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 
