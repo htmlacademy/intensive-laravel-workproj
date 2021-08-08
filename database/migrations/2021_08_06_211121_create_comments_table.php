@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->foreignIdFor(\App\Models\Episode::class);
             $table->foreignIdFor(\App\Models\User::class);
             $table->text('comment');
-            $table->unsignedBigInteger('parent_id')->index()->constrained('comments');
+            $table->unsignedBigInteger('parent_id')->index()->constrained('comments')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });

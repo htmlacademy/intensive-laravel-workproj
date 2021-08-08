@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEpisodeGenreTable extends Migration
+class CreateGenreShowTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEpisodeGenreTable extends Migration
      */
     public function up()
     {
-        Schema::create('episode_genre', function (Blueprint $table) {
+        Schema::create('genre_show', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Show::class);
             $table->foreignIdFor(\App\Models\Genre::class);
@@ -28,6 +28,6 @@ class CreateEpisodeGenreTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('episode_genre');
+        Schema::dropIfExists('genre_show');
     }
 }
