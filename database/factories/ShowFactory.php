@@ -26,8 +26,6 @@ class ShowFactory extends Factory
             'title_original' => $this->faker->words(3, true),
             'description' => $this->faker->sentences(3, true),
             'year' => $this->faker->year,
-            'votes' => random_int(10, 10000),
-            'rating' => random_int(100, 500) / 100,
             'status' => $this->faker->randomElement(['new', 'ended']),
         ];
     }

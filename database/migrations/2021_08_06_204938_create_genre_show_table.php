@@ -15,8 +15,8 @@ class CreateGenreShowTable extends Migration
     {
         Schema::create('genre_show', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Show::class);
-            $table->foreignIdFor(\App\Models\Genre::class);
+            $table->foreignIdFor(\App\Models\Show::class)->constrained();
+            $table->foreignIdFor(\App\Models\Genre::class)->constrained();
             $table->timestampsTz();
         });
     }

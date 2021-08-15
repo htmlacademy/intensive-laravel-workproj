@@ -15,10 +15,10 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Episode::class);
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Episode::class)->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->text('comment');
-            $table->unsignedBigInteger('parent_id')->index()->constrained('comments')->nullable();
+            $table->unsignedBigInteger('parent_id')->constrained('comments')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });

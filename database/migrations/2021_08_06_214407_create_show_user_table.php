@@ -15,8 +15,8 @@ class CreateShowUserTable extends Migration
     {
         Schema::create('show_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Show::class);
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Show::class)->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->timestampsTz();
         });
     }

@@ -17,7 +17,7 @@ class CreateEpisodesTable extends Migration
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignIdFor(Show::class);
+            $table->foreignIdFor(Show::class)->constrained();
             $table->integer('season');
             $table->integer('episode_number');
             $table->timestampTz('air_at');

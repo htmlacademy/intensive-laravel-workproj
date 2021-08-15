@@ -19,8 +19,6 @@ class CreateShowsTable extends Migration
             $table->string('title_original');
             $table->text('description')->nullable();
             $table->integer('year');
-            $table->integer('votes');
-            $table->integer('rating');
             $table->string('status');
             $table->string('imdbId')->nullable();
             $table->timestampsTz();
