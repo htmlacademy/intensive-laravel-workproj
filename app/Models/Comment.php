@@ -10,6 +10,13 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $with = ['user'];
+
+    protected $hidden = [
+        'updated_at',
+        'deleted_at',
+    ];
+
     public function episode(): BelongsTo
     {
         return $this->belongsTo(Episode::class);

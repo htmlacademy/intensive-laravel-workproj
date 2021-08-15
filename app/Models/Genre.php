@@ -10,6 +10,11 @@ class Genre extends Model
 {
     use HasFactory;
 
+    protected $visible = [
+        'id',
+        'title',
+    ];
+
     public function shows(): BelongsToMany
     {
         return $this->belongsToMany(Show::class);

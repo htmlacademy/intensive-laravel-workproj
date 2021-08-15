@@ -11,6 +11,18 @@ class Episode extends Model
 {
     use HasFactory;
 
+    protected $withCount = ['comments'];
+
+    protected $casts = [
+        'show_id' => 'int',
+        'comments_count' => 'int'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function show(): BelongsTo
     {
         return $this->belongsTo(Show::class);

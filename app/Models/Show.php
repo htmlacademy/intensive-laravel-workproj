@@ -11,7 +11,25 @@ class Show extends Model
 {
     use HasFactory;
 
-    protected $appends = ['genres'];
+    protected $with = ['genres'];
+
+    protected $withCount = ['episodes as total_episodes'];
+
+    protected $appends = ['total_seasons'];
+
+    protected $casts = [
+        'total_episodes' => 'int'
+    ];
+
+    protected $hidden = [
+      'created_at',
+      'updated_at',
+    ];
+
+    public function getTotalSeasonsAttribute()
+    {
+        return $this->episodes()->groupBy('season')->count();
+    }
 
     public function episodes(): HasMany
     {
