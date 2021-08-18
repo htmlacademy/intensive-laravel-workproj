@@ -222,14 +222,20 @@ HOST: https://laravel-api-intensive.localhost
             {
                 "id": 0,
                 "title": "string",
-                "titleOriginal": "string",
+                "title_original": "string",
                 "status": "string",
                 "year": 0,
                 "rating": 0,
-                "totalSeasons": 0,
-                "totalEpisodes": 0,
-                "watchStatus": "string",
-                "watchedEpisodes": 0
+                "total_seasons": 0,
+                "total_episodes": 0,
+                "genres": [
+                    {
+                        "id": 0,
+                        "title": "string"
+                    },
+                ],
+                "watch_status": "string",
+                "watched_episodes": 0
             },
         ]
 
@@ -245,14 +251,20 @@ HOST: https://laravel-api-intensive.localhost
         {
             "id": 0,
             "title": "string",
-            "titleOriginal": "string",
+            "title_original": "string",
             "status": "string",
             "year": 0,
             "rating": 0,
-            "totalSeasons": 0,
-            "totalEpisodes": 0,
-            "watchStatus": "string",
-            "watchedEpisodes": 0
+            "total_seasons": 0,
+            "total_episodes": 0,
+            "genres": [
+                {
+                    "id": 0,
+                    "title": "string"
+                },
+            ],
+            "watch_status": "string",
+            "watched_episodes": 0
         }
 
 ## Получение списка жанров [GET /api/genres]
@@ -281,12 +293,12 @@ HOST: https://laravel-api-intensive.localhost
             {
                 "id": 0,
                 "title": "string",
-                "showId": 0,
-                "seasonNumber": 0,
-                "episodeNumber": 0,
-                "airDate": "string",
-                "commentsCount": 0,
-                "watchStatus": "string",
+                "show_id": 0,
+                "season": 0,
+                "episode_number": 0,
+                "air_date": "string",
+                "comments_count": 0,
+                "watch_status": "string",
             },
         ]
 
@@ -302,12 +314,12 @@ HOST: https://laravel-api-intensive.localhost
         {
             "id": 0,
             "title": "string",
-            "showId": 0,
-            "seasonNumber": 0,
-            "episodeNumber": 0,
-            "airDate": "string",
-            "commentsCount": 0,
-            "watchStatus": "string",
+            "show_id": 0,
+            "season": 0,
+            "episode_number": 0,
+            "air_date": "string",
+            "comments_count": 0,
+            "watch_status": "string",
         }
 
 ## Получение списка комментариев эпизода [GET /api/episode/{episode}/comments]
@@ -325,12 +337,12 @@ HOST: https://laravel-api-intensive.localhost
                 {
                     "id": 0,
                     "user": {
-                        "login": "string",
+                        "name": "string",
                         "avatar": "string",
                     },
                     "comment": "string",
-                    "parentId": 0,
-                    "createdAt": "string",
+                    "parent_id": 0,
+                    "created_at": "string",
                 },
             ]
         }
@@ -382,7 +394,7 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
     + Headers
         X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (required)
-    + Body            
+    + Body
     {
         "imdb": "944947"
     }
@@ -411,14 +423,14 @@ HOST: https://laravel-api-intensive.localhost
         {
                 "id": 0,
                 "title": "string",
-                "titleOriginal": "string",
+                "title_original": "string",
                 "status": "string",
                 "year": 0,
                 "rating": 0,
-                "totalSeasons": 0,
-                "totalEpisodes": 0,
-                "watchStatus": "string",
-                "watchedEpisodes": 0
+                "total_seasons": 0,
+                "total_episodes": 0,
+                "watch_status": "string",
+                "watched_episodes": 0
             }
 
 ## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
@@ -434,12 +446,12 @@ HOST: https://laravel-api-intensive.localhost
             {
                 "id": 0,
                 "title": "string",
-                "showId": 0,
-                "seasonNumber": 0,
-                "episodeNumber": 0,
-                "airDate": "string",
-                "commentsCount": 0,
-                "watchStatus": "string",
+                "show_id": 0,
+                "season": 0,
+                "episode_number": 0,
+                "air_date": "string",
+                "comments_count": 0,
+                "watch_status": "string",
             },
         ]
 
