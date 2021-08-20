@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/token', function (Request $request) { // todo удалить! роут для демонстрации работы токена
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
 });
 
 Route::get('/genres', [\App\Http\Controllers\GenreController::class, 'index'])->name('genres.index');
@@ -25,3 +27,6 @@ Route::get('/shows/{show}/episodes', [\App\Http\Controllers\EpisodeController::c
 Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class, 'show'])->name('episodes.show');
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 
+Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function () {
+    Route::get('/shows', [\App\Http\Controllers\ShowController::class, 'index'])->name('shows.index'); // todo возвращать информацию для пользователя
+});
