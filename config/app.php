@@ -1,7 +1,5 @@
 <?php
 
-use App\Providers\FortifyServiceProvider;
-
 return [
 
     /*
@@ -167,8 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-
-        FortifyServiceProvider::class,
 
         /*
          * Application Service Providers...
