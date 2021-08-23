@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/csrf-token', function () {
+    return response()->json(null, 204);
+})->middleware('web');
 
-Route::post('/token', function (Request $request) { // todo удалить! роут для демонстрации работы токена
-    $token = $request->user()->createToken($request->token_name);
-
-    return ['token' => $token->plainTextToken];
-});
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('auth.register');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('auth.login');
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->middleware('auth:sanctum')->name('auth.logout');
 
 Route::get('/genres', [\App\Http\Controllers\GenreController::class, 'index'])->name('genres.index');
 Route::get('/shows', [\App\Http\Controllers\ShowController::class, 'index'])->name('shows.index');
