@@ -28,5 +28,6 @@ Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 
 Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function () {
-    Route::get('/shows', [\App\Http\Controllers\ShowController::class, 'index'])->name('shows.index'); // todo возвращать информацию для пользователя
+    Route::get('/shows', [\App\Http\Controllers\UserController::class, 'shows'])->name('shows.index');
+    Route::get('/shows/{show}/new-episodes', [\App\Http\Controllers\UserController::class, 'newEpisodes'])->name('shows.new-episodes');
 });

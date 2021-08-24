@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Show::class);
     }
 
+    public function episodes(): BelongsToMany
+    {
+        return $this->belongsToMany(Episode::class);
+    }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
