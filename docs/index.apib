@@ -7,21 +7,11 @@ HOST: https://laravel-api-intensive.localhost
 
 Этот раздел описывает методы регистрации и аутентификации пользователя
 
-## Получение CSRF Token [GET /api/csrf-token]
-
-Установка CSRF токена в `XSRF-TOKEN` cookie.
-
-+ Request (application/json)
-
-+ Response 204 (application/json)
-
 ## Регистрация пользователя [POST /api/register]
 
 Регистрация нового пользователя для получения доступа к персональной части сайта.
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
@@ -31,8 +21,6 @@ HOST: https://laravel-api-intensive.localhost
 + Response 201 (application/json)
 
 + Request (multipart/form-data; boundary={boundary value})
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
     + Body
 
         --{boundary value}
@@ -61,8 +49,6 @@ HOST: https://laravel-api-intensive.localhost
 + Response 201 (application/json)
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
 
 + Response 422 (application/json)
 
@@ -84,8 +70,6 @@ HOST: https://laravel-api-intensive.localhost
 ## Авторизация [POST /api/login]
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + password: 12345678 (required) - пароль
@@ -93,8 +77,6 @@ HOST: https://laravel-api-intensive.localhost
 + Response 200 (application/json)
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
 
 + Response 422 (application/json)
 
@@ -111,8 +93,6 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
     + Body
         {
             "email": "notexisted@example.com",
@@ -134,17 +114,15 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 204 (application/json)
 
-## Обновление профиля [PATCH /api/register]
+## Обновление профиля [PATCH /api/user]
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
@@ -155,8 +133,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (multipart/form-data; boundary={boundary value})
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
 
         --{boundary value}
@@ -186,8 +163,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 422 (application/json)
 
@@ -359,8 +335,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
             "content": "text"
@@ -372,8 +347,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Attributes
         + imdb: tt0944947 (string, required) - imdb id вида tt0944947
 
@@ -381,8 +355,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
     {
         "imdb": "tt0944947"
@@ -400,8 +373,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
     {
         "imdb": "944947"
@@ -470,8 +442,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
 
@@ -492,8 +463,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
 
@@ -513,8 +483,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
             "rating": 5
@@ -524,8 +493,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
             "rating": 10

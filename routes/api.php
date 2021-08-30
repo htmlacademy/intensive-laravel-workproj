@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/csrf-token', function () {
-    return response()->json(null, 204);
-})->middleware('web');
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('auth.register');
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('auth.login');
