@@ -19,7 +19,7 @@ class Show extends Model
 
     protected $withCount = ['episodes as total_episodes'];
 
-    protected $appends = ['total_seasons', 'watch_status', 'watched_episodes'];
+    protected $appends = ['total_seasons', 'watch_status', 'watched_episodes', 'user_vote', 'rating'];
 
     protected $casts = [
         'total_episodes' => 'int'
@@ -48,7 +48,7 @@ class Show extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('vote');
     }
 
     public function getWatchedEpisodesAttribute()
@@ -71,5 +71,19 @@ class Show extends Model
         }
 
         return self::USER_WATCHED_STATUS;
+    }
+
+    public function getUserVoteAttribute()
+    {
+        if (Auth::guest()) {
+            return null;
+        }
+
+        return $this->users()->firstWhere('user_id', Auth::id())->pivot->vote;
+    }
+
+    public function getRatingAttribute()
+    {
+        return (int) round($this->users()->avg('vote'));
     }
 }

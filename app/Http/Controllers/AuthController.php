@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
-     * @param RegisterRequest $request
+     * @param UserRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(RegisterRequest $request)
+    public function register(UserRequest $request)
     {
-        $user = User::create($request->validated());
+        $params = $request->safe()->except('file');
+        $user = User::create($params);
         $token = $user->createToken('auth-token');
 
         return response()->json([

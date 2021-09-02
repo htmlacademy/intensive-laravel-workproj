@@ -118,70 +118,6 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 204 (application/json)
 
-## Обновление профиля [PATCH /api/user]
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
-    + Attributes
-        + email: mail@example.com (required) - email адрес пользователя
-        + name: username (required) - имя пользователя
-        + password: 12345678 (required) - пароль
-        + password_confirmation: 12345678 (required) - подтверждение пароля
-
-+ Response 201 (application/json)
-
-+ Request (multipart/form-data; boundary={boundary value})
-    + Headers
-        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
-    + Body
-
-        --{boundary value}
-        Content-Disposition: form-data; name="email"
-
-        mail@example.com
-        --{boundary value}
-        Content-Disposition: form-data; name="name"
-
-        username
-        --{boundary value}
-        Content-Disposition: form-data; name="password"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name="password_confirmation"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
-        Content-Type: image/jpeg (according to the type of the uploaded file)
-
-        {file content}
-        --{boundary value}--
-
-+ Response 201 (application/json)
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "name": [
-                    "The name field is required."
-                ],
-                "email": [
-                    "The email field is required."
-                ],
-                "password": [
-                    "The password field is required."
-                ]
-            }
-        }
-
 # Group Shows
 
 ## Получение списка сериалов [GET /api/shows]
@@ -215,7 +151,8 @@ HOST: https://laravel-api-intensive.localhost
                     },
                 ],
                 "watch_status": "string",
-                "watched_episodes": 0
+                "watched_episodes": 0,
+                "user_vote": 0
             },
         ]
 
@@ -244,7 +181,8 @@ HOST: https://laravel-api-intensive.localhost
                 },
             ],
             "watch_status": "string",
-            "watched_episodes": 0
+            "watched_episodes": 0,
+            "user_vote": 0
         }
 
 ## Получение списка жанров [GET /api/genres]
@@ -338,7 +276,7 @@ HOST: https://laravel-api-intensive.localhost
         Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "content": "text"
+            "text": "text"
         }
 
 + Response 201 (application/json)
@@ -391,6 +329,71 @@ HOST: https://laravel-api-intensive.localhost
 
 # Group UserArea
 
+## Обновление профиля [PATCH /api/user]
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 200 (application/json)
+
++ Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+    + Body
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 200 (application/json)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "name": [
+                    "The name field is required."
+                ],
+                "email": [
+                    "The email field is required."
+                ],
+                "password": [
+                    "The password field is required."
+                ]
+            }
+        }
+
+
 ## Получение списка просматриваемых сериалов пользователя [GET /api/user/shows]
 
 Метод возвращает сериалы пользователя без пагинации.
@@ -410,7 +413,8 @@ HOST: https://laravel-api-intensive.localhost
                 "total_seasons": 0,
                 "total_episodes": 0,
                 "watch_status": "string",
-                "watched_episodes": 0
+                "watched_episodes": 0,
+                "user_vote": 0
             }
 
 ## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
@@ -476,7 +480,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Добавление оценки сериалу [POST /api/user/shows/rating/{show}]
+## Добавление оценки сериалу [POST /api/user/shows/{show}/vote]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
@@ -486,7 +490,7 @@ HOST: https://laravel-api-intensive.localhost
         Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "rating": 5
+            "vote": 5
         }
 
 + Response 201 (application/json)
@@ -496,14 +500,14 @@ HOST: https://laravel-api-intensive.localhost
         Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "rating": 10
+            "vote": 10
         }
 
 + Response 422 (application/json)
     {
         "message": "The given data was invalid.",
         "errors": {
-            "rating": [
+            "vote": [
                 "The rating field must be between 1 and 5."
             ]
         }

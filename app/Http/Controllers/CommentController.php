@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentStoreRequest;
 use App\Models\Episode;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -26,8 +27,14 @@ class CommentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CommentStoreRequest $request, Episode $episode)
     {
-        //
+        $episode->comments()->create([
+            'parent_id' => $request->comment,
+            'comment' => $request->text,
+            'user_id' => Auth::id(),
+        ]);
+
+        return response()->json(null, 201);
     }
 }

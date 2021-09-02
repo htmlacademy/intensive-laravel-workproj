@@ -23,8 +23,15 @@ Route::get('/shows/{show}', [\App\Http\Controllers\ShowController::class, 'show'
 Route::get('/shows/{show}/episodes', [\App\Http\Controllers\EpisodeController::class, 'index'])->name('episodes.index');
 Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class, 'show'])->name('episodes.show');
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+Route::post('/episode/{episode}/comments/{comment?}', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth:sanctum')->name('comments.store');
 
 Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function () {
+    Route::patch('/', [\App\Http\Controllers\UserController::class, 'update'])->name('update');
     Route::get('/shows', [\App\Http\Controllers\UserController::class, 'shows'])->name('shows.index');
     Route::get('/shows/{show}/new-episodes', [\App\Http\Controllers\UserController::class, 'newEpisodes'])->name('shows.new-episodes');
+    Route::post('/shows/watch/{show}', [\App\Http\Controllers\UserController::class, 'watchShow'])->name('shows.watch');
+    Route::delete('/shows/watch/{show}', [\App\Http\Controllers\UserController::class, 'unwatchShow'])->name('shows.unwatch');
+    Route::post('/episodes/watch/{episode}', [\App\Http\Controllers\UserController::class, 'watchEpisode'])->name('episodes.watch');
+    Route::delete('/episodes/watch/{episode}', [\App\Http\Controllers\UserController::class, 'unwatchEpisode'])->name('episodes.unwatch');
+    Route::post('/shows/{show}/vote', [\App\Http\Controllers\UserController::class, 'vote'])->name('shows.vote');
 });

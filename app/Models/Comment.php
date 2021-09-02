@@ -10,6 +10,12 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'parent_id',
+      'comment',
+      'user_id',
+    ];
+
     protected $with = ['user'];
 
     protected $hidden = [

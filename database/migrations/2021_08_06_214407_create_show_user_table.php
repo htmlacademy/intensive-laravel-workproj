@@ -17,6 +17,7 @@ class CreateShowUserTable extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Show::class)->constrained();
             $table->foreignIdFor(\App\Models\User::class)->constrained();
+            $table->integer('vote')->nullable();
             $table->timestampsTz();
         });
     }

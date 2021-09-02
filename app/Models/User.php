@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
     ];
 
     protected $visible = [
@@ -41,7 +42,7 @@ class User extends Authenticatable
 
     public function shows(): BelongsToMany
     {
-        return $this->belongsToMany(Show::class);
+        return $this->belongsToMany(Show::class)->withPivot('vote');
     }
 
     public function episodes(): BelongsToMany
