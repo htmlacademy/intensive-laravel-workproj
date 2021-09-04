@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Show;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UsersDataSeeder extends Seeder
 {
@@ -17,13 +16,18 @@ class UsersDataSeeder extends Seeder
      */
     public function run()
     {
-        /** @var User $user */
-        $user = User::factory()
-            ->create([
-                'email' => 'demo@laravel.localhost',
-                'password' => Hash::make('12345678'),
-            ]);
+        $data = User::factory()->make();
 
-        $user->shows()->attach(Show::inRandomOrder()->limit(3)->pluck('id'));
+        /** @var User $user */
+        $user = User::updateOrCreate(
+            ['email' => 'demo@laravel.localhost'],
+            [
+                'email' => 'demo@laravel.localhost',
+                'password' => '12345678',
+                'name' => $data->name,
+            ]
+        );
+
+        $user->shows()->sync(Show::inRandomOrder()->limit(3)->pluck('id'));
     }
 }

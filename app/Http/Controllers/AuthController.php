@@ -33,7 +33,7 @@ class AuthController extends Controller
     {
         if(!Auth::attempt($request->validated())) {
             // todo рассказать о возможности ограничения к-ва запросов на один роут от одного пользователя
-            abort(401);
+            abort(401, trans('auth.failed'));
         }
 
         $token = Auth::user()->createToken('auth-token');
