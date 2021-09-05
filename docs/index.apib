@@ -20,49 +20,21 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-+ Request (multipart/form-data; boundary={boundary value})
-    + Body
-
-        --{boundary value}
-        Content-Disposition: form-data; name="email"
-
-        mail@example.com
-        --{boundary value}
-        Content-Disposition: form-data; name="name"
-
-        username
-        --{boundary value}
-        Content-Disposition: form-data; name="password"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name="password_confirmation"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
-        Content-Type: image/jpeg (according to the type of the uploaded file)
-
-        {file content}
-        --{boundary value}--
-
-+ Response 201 (application/json)
-
 + Request (application/json)
 
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "name": [
-                    "The name field is required."
+                    "Поле Имя обязательно для заполнения."
                 ],
                 "email": [
-                    "The email field is required."
+                    "Поле E-Mail адрес обязательно для заполнения."
                 ],
                 "password": [
-                    "The password field is required."
+                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
@@ -81,13 +53,13 @@ HOST: https://laravel-api-intensive.localhost
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "email": [
-                    "The email field is required."
+                    "Поле E-Mail адрес обязательно для заполнения."
                 ],
                 "password": [
-                    "The password field is required."
+                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
@@ -102,11 +74,11 @@ HOST: https://laravel-api-intensive.localhost
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Неверное имя пользователя или пароль.",
             "errors": {
-                "email": [
-                    "These credentials do not match our records."
-                ]
+                "exception": {
+                    "name": "HttpException"
+                }
             }
         }
 
@@ -301,10 +273,10 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 422 (application/json)
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "imdb": [
-                    "This show already exists."
+                    "Такой сериал уже есть."
                 ]
             }
         }
@@ -319,10 +291,10 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 422 (application/json)
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "imdb": [
-                    "This imdb is invalid."
+                    "Идентификатор imdb должен быть в формате tt0000000."
                 ]
             }
         }
@@ -379,16 +351,16 @@ HOST: https://laravel-api-intensive.localhost
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "name": [
-                    "The name field is required."
+                    "Поле Имя обязательно для заполнения."
                 ],
                 "email": [
-                    "The email field is required."
+                    "Поле E-Mail адрес обязательно для заполнения."
                 ],
                 "password": [
-                    "The password field is required."
+                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
@@ -505,14 +477,12 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 422 (application/json)
     {
-        "message": "The given data was invalid.",
+        "message": "Переданные данные не корректны.",
         "errors": {
             "vote": [
-                "The rating field must be between 1 and 5."
+                "Поле vote должно быть между 1 и 5."
             ]
         }
     }
 
-// todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации
-
-// документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html`
+<!--  документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html` -->

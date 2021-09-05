@@ -6,6 +6,8 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\VoteRequest;
 use App\Models\Episode;
 use App\Models\Show;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +17,7 @@ class UserController extends Controller
      * Обновление профиля.
      *
      * @param UserRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|Responsable
      */
     public function update(UserRequest $request)
     {
@@ -37,64 +39,95 @@ class UserController extends Controller
             Storage::disk('public')->delete($oldFile);
         }
 
-        return response()->json(Auth::user()->makeVisible('email'));
+        return $this->success(Auth::user()->makeVisible('email'));
     }
 
     /**
      * Получение списка сериалов просматриваемых пользователем.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|Responsable
      */
     public function shows()
     {
-        return response()->json(Auth::user()->shows);
+        return $this->success(Auth::user()->shows);
     }
 
     /**
      * Получение списка не просмотренных пользователем серий указанного сериала.
      *
      * @param Show $show
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|Responsable
      */
     public function newEpisodes(Show $show)
     {
         $watched = Auth::user()->episodes()->where('show_id', $show->id)->pluck('id');
 
-        return response()->json($show->episodes()->whereNotIn('id', $watched)->get());
+        return $this->success($show->episodes()->whereNotIn('id', $watched)->get());
     }
 
+    /**
+     * Добавление сериала в список просматриваемых.
+     *
+     * @param Show $show
+     * @return JsonResponse|Responsable
+     */
     public function watchShow(Show $show)
     {
         Auth::user()->shows()->attach($show);
 
-        return response()->json(null, 201);
+        return $this->success(null, 201);
     }
 
+    /**
+     * Удаление сериала из списка просматриваемых.
+     *
+     * @param Show $show
+     * @return JsonResponse|Responsable
+     */
     public function unwatchShow(Show $show)
     {
         Auth::user()->shows()->detach($show);
 
-        return response()->json(null, 201);
+        return $this->success(null, 201);
     }
 
+    /**
+     * Добавление эпизода в список просмотренных.
+     *
+     * @param Episode $episode
+     * @return JsonResponse|Responsable
+     */
     public function watchEpisode(Episode $episode)
     {
         Auth::user()->episodes()->attach($episode);
 
-        return response()->json(null, 201);
+        return $this->success(null, 201);
     }
 
+    /**
+     * Удаление эпизода из списка просмотренных.
+     *
+     * @param Episode $episode
+     * @return JsonResponse|Responsable
+     */
     public function unwatchEpisode(Episode $episode)
     {
         Auth::user()->episodes()->detach($episode);
 
-        return response()->json(null, 201);
+        return $this->success(null, 201);
     }
 
+    /**
+     * Выставление оценки сериалу.
+     *
+     * @param VoteRequest $request
+     * @param Show $show
+     * @return JsonResponse|Responsable
+     */
     public function vote(VoteRequest $request, Show $show)
     {
         Auth::user()->shows()->attach($show, ['vote' => $request->vote]);
 
-        return response()->json(null, 201);
+        return $this->success(null, 201);
     }
 }

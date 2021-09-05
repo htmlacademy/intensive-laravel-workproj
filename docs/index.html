@@ -32,38 +32,17 @@
     <span class="hljs-string">"password"</span>,
     <span class="hljs-string">"password_confirmation"</span>
   ]
-</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">multipart/form-data; boundary={boundary value}</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>--{boundary value}
-Content-Disposition: form-data; name=<span class="hljs-string">"email"</span>
-
-mail@example.com
---{boundary value}
-Content-Disposition: form-data; name=<span class="hljs-string">"name"</span>
-
-username
---{boundary value}
-Content-Disposition: form-data; name=<span class="hljs-string">"password"</span>
-
-<span class="hljs-number">12345678</span>
---{boundary value}
-Content-Disposition: form-data; name=<span class="hljs-string">"password_confirmation"</span>
-
-<span class="hljs-number">12345678</span>
---{boundary value}
-Content-Disposition: form-data; name=<span class="hljs-string">'file'</span>; filename=<span class="hljs-string">'avatar.jpg'</span>
-Content-Type: image/jpeg (according to the type <span class="hljs-keyword">of</span> the uploaded file)
-
-{file content}
---{boundary value}--</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The name field is required."</span>
+      <span class="hljs-string">"Поле Имя обязательно для заполнения."</span>
     ]</span>,
     "<span class="hljs-attribute">email</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The email field is required."</span>
+      <span class="hljs-string">"Поле E-Mail адрес обязательно для заполнения."</span>
     ]</span>,
     "<span class="hljs-attribute">password</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The password field is required."</span>
+      <span class="hljs-string">"Поле Пароль обязательно для заполнения."</span>
     ]
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="auth-авторизация" class="resource"><h3 class="resource-heading">Авторизация <a href="#auth-авторизация" class="permalink">&nbsp;&para;</a></h3><div id="auth-авторизация-post" class="action post"><h4 class="action-heading"><div class="name">Авторизация</div><a href="#auth-авторизация-post" class="method post">POST</a><code class="uri">/api/login</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://laravel-api-intensive.localhost</span>/api/login</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
@@ -87,24 +66,24 @@ Content-Type: image/jpeg (according to the type <span class="hljs-keyword">of</s
     <span class="hljs-string">"password"</span>
   ]
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">email</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The email field is required."</span>
+      <span class="hljs-string">"Поле E-Mail адрес обязательно для заполнения."</span>
     ]</span>,
     "<span class="hljs-attribute">password</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The password field is required."</span>
+      <span class="hljs-string">"Поле Пароль обязательно для заполнения."</span>
     ]
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">email</span>": <span class="hljs-value"><span class="hljs-string">"notexisted@example.com"</span></span>,
   "<span class="hljs-attribute">password</span>": <span class="hljs-value"><span class="hljs-string">"123"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Неверное имя пользователя или пароль."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">email</span>": <span class="hljs-value">[
-      <span class="hljs-string">"These credentials do not match our records."</span>
-    ]
+    "<span class="hljs-attribute">exception</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"HttpException"</span>
+    </span>}
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="auth-выход" class="resource"><h3 class="resource-heading">Выход <a href="#auth-выход" class="permalink">&nbsp;&para;</a></h3><div id="auth-выход-post" class="action post"><h4 class="action-heading"><div class="name">Выход</div><a href="#auth-выход-post" class="method post">POST</a><code class="uri">/api/logout</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://laravel-api-intensive.localhost</span>/api/logout</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>204</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="shows" class="resource-group"><h2 class="group-heading">Shows <a href="#shows" class="permalink">&para;</a></h2><div id="shows-получение-списка-сериалов" class="resource"><h3 class="resource-heading">Получение списка сериалов <a href="#shows-получение-списка-сериалов" class="permalink">&nbsp;&para;</a></h3><div id="shows-получение-списка-сериалов-get" class="action get"><h4 class="action-heading"><div class="name">Получение списка сериалов</div><a href="#shows-получение-списка-сериалов-get" class="method get">GET</a><code class="uri">/api/shows</code></h4><p>Получение списка сериалов с пагинацией по 20 элементов.</p>
 <h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://laravel-api-intensive.localhost</span>/api/shows</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
@@ -240,19 +219,19 @@ Content-Type: image/jpeg (according to the type <span class="hljs-keyword">of</s
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">imdb</span>": <span class="hljs-value"><span class="hljs-string">"tt0944947"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">imdb</span>": <span class="hljs-value">[
-      <span class="hljs-string">"This show already exists."</span>
+      <span class="hljs-string">"Такой сериал уже есть."</span>
     ]
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">imdb</span>": <span class="hljs-value"><span class="hljs-string">"944947"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">imdb</span>": <span class="hljs-value">[
-      <span class="hljs-string">"This imdb is invalid."</span>
+      <span class="hljs-string">"Идентификатор imdb должен быть в формате tt0000000."</span>
     ]
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="userarea" class="resource-group"><h2 class="group-heading">UserArea <a href="#userarea" class="permalink">&para;</a></h2><div id="userarea-обновление-профиля" class="resource"><h3 class="resource-heading">Обновление профиля <a href="#userarea-обновление-профиля" class="permalink">&nbsp;&para;</a></h3><div id="userarea-обновление-профиля-patch" class="action patch"><h4 class="action-heading"><div class="name">Обновление профиля</div><a href="#userarea-обновление-профиля-patch" class="method patch">PATCH</a><code class="uri">/api/user</code></h4><h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname">https://laravel-api-intensive.localhost</span>/api/user</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
@@ -309,16 +288,16 @@ Content-Type: image/jpeg (according to the type <span class="hljs-keyword">of</s
 
 {file content}
 --{boundary value}--</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The given data was invalid."</span></span>,
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
   "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The name field is required."</span>
+      <span class="hljs-string">"Поле Имя обязательно для заполнения."</span>
     ]</span>,
     "<span class="hljs-attribute">email</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The email field is required."</span>
+      <span class="hljs-string">"Поле E-Mail адрес обязательно для заполнения."</span>
     ]</span>,
     "<span class="hljs-attribute">password</span>": <span class="hljs-value">[
-      <span class="hljs-string">"The password field is required."</span>
+      <span class="hljs-string">"Поле Пароль обязательно для заполнения."</span>
     ]
   </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="userarea-получение-списка-просматриваемых-сериалов-пользователя" class="resource"><h3 class="resource-heading">Получение списка просматриваемых сериалов пользователя <a href="#userarea-получение-списка-просматриваемых-сериалов-пользователя" class="permalink">&nbsp;&para;</a></h3><div id="userarea-получение-списка-просматриваемых-сериалов-пользователя-get" class="action get"><h4 class="action-heading"><div class="name">Получение списка просматриваемых сериалов пользователя</div><a href="#userarea-получение-списка-просматриваемых-сериалов-пользователя-get" class="method get">GET</a><code class="uri">/api/user/shows</code></h4><p>Метод возвращает сериалы пользователя без пагинации.
@@ -358,17 +337,13 @@ Content-Type: image/jpeg (according to the type <span class="hljs-keyword">of</s
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>201</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer {$token} - auth token полученный после регистрации или аутентификации (required)</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">vote</span>": <span class="hljs-value"><span class="hljs-number">10</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>422</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
-    <span class="hljs-string">"message"</span>: <span class="hljs-string">"The given data was invalid."</span>,
-    <span class="hljs-string">"errors"</span>: {
-        <span class="hljs-string">"vote"</span>: [
-            <span class="hljs-string">"The rating field must be between 1 and 5."</span>
-        ]
-    }
-}
-
-<span class="hljs-comment">// todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации</span>
-
-<span class="hljs-comment">// документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html`</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 02 Sep 2021</p><script>/* eslint-env browser */
+  "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"Переданные данные не корректны."</span></span>,
+  "<span class="hljs-attribute">errors</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">vote</span>": <span class="hljs-value">[
+      <span class="hljs-string">"Поле vote должно быть между 1 и 5."</span>
+    ]
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 06 Sep 2021</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 

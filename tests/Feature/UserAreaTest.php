@@ -48,8 +48,8 @@ class UserAreaTest extends TestCase
         $response = $this->getJson(route('user.shows.index'));
 
         $response->assertStatus(200);
-        $response->assertJsonCount(3);
-        $response->assertJsonStructure([['title', 'watch_status', 'watched_episodes']]);
+        $response->assertJsonCount(3, 'data');
+        $response->assertJsonStructure(['data' => [['title', 'watch_status', 'watched_episodes']]]);
     }
 
     public function testGetUserNotWatchedEpisodes()
@@ -63,8 +63,8 @@ class UserAreaTest extends TestCase
         $response = $this->getJson(route('user.shows.new-episodes', $show));
 
         $response->assertStatus(200);
-        $response->assertJsonCount(2);
-        $response->assertJsonStructure([['title', 'show_id', 'season', 'episode_number']]);
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonStructure(['data' => [['title', 'show_id', 'season', 'episode_number']]]);
         $response->assertJsonFragment(['show_id' => $show->id]);
     }
 

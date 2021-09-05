@@ -18,7 +18,7 @@ class GenresTest extends TestCase
         $response = $this->getJson(route('genres.index'));
 
         $response->assertStatus(200);
-        $response->assertJsonCount($count);
-        $response->assertJsonStructure([['id', 'title']]);
+        $response->assertJsonCount($count, 'data');
+        $response->assertJsonStructure(['data' => [['id', 'title']]]);
     }
 }

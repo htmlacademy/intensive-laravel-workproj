@@ -27,7 +27,7 @@ class CommentsTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['count' => $count]);
-        $response->assertJsonCount($count, 'comments');
+        $response->assertJsonCount($count, 'data.comments');
         $response->assertJsonFragment([
             'id' => $comment->id,
             'comment' => $comment->comment,

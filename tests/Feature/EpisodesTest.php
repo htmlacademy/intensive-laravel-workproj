@@ -19,7 +19,7 @@ class EpisodesTest extends TestCase
         $response = $this->getJson(route('episodes.index', $show->id));
 
         $response->assertStatus(200);
-        $response->assertJsonCount($count);
+        $response->assertJsonCount($count, 'data');
         $response->assertJsonFragment([
             'title' => $episode->title,
             'show_id' => $show->id,

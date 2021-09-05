@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
      * @param UserRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|Responsable
      */
     public function register(UserRequest $request)
     {
@@ -19,7 +21,7 @@ class AuthController extends Controller
         $user = User::create($params);
         $token = $user->createToken('auth-token');
 
-        return response()->json([
+        return $this->success([
             'user' => $user,
             'token' => $token->plainTextToken,
         ], 201);
@@ -27,7 +29,7 @@ class AuthController extends Controller
 
     /**
      * @param LoginRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse|Responsable
      */
     public function login(LoginRequest $request)
     {
@@ -38,13 +40,16 @@ class AuthController extends Controller
 
         $token = Auth::user()->createToken('auth-token');
 
-        return response()->json(['token' => $token->plainTextToken]);
+        return $this->success(['token' => $token->plainTextToken]);
     }
 
+    /**
+     * @return JsonResponse|Responsable
+     */
     public function logout()
     {
         Auth::user()->tokens()->delete();
 
-        return response()->json([], 204);
+        return $this->success(null, 204);
     }
 }
