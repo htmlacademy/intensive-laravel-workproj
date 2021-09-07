@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Show;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ShowsTest extends TestCase
@@ -38,5 +40,14 @@ class ShowsTest extends TestCase
             'total_episodes' => $show->episodes()->count(),
             'genres' => $show->genres,
         ]);
+    }
+
+    public function testRequestAddingShow()
+    {
+        Sanctum::actingAs(User::factory()->create());
+        
+        $response = $this->postJson(route('shows.request'), ['imdb' => 'tt001']);
+
+        $response->assertStatus(201);
     }
 }

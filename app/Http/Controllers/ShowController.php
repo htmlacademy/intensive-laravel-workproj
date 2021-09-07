@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddShowRequest;
 use App\Models\Show;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
@@ -27,5 +28,10 @@ class ShowController extends Controller
     public function show(Show $show)
     {
         return $this->success($show);
+    }
+
+    public function request(AddShowRequest $request)
+    {
+        return $this->success(null, 201);
     }
 }

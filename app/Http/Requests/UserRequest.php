@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
                 'max:255',
                 $this->getUniqRule(),
             ],
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'sometimes|string|min:8|confirmed',
             'file' => 'nullable|image|max:10240'
         ];
     }
@@ -44,7 +44,7 @@ class UserRequest extends FormRequest
     {
         $rule = Rule::unique(User::class);
 
-        if ($this->method() === 'patch' && Auth::check()) {
+        if ($this->isMethod('patch') && Auth::check()) {
             return $rule->ignore(Auth::user());
         }
 

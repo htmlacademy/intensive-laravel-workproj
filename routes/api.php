@@ -25,6 +25,8 @@ Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 Route::post('/episode/{episode}/comments/{comment?}', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth:sanctum')->name('comments.store');
 
+Route::post('/shows', [\App\Http\Controllers\ShowController::class, 'request'])->middleware('auth:sanctum')->name('shows.request');
+
 Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function () {
     Route::patch('/', [\App\Http\Controllers\UserController::class, 'update'])->name('update');
     Route::get('/shows', [\App\Http\Controllers\UserController::class, 'shows'])->name('shows.index');
