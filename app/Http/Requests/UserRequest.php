@@ -35,7 +35,12 @@ class UserRequest extends FormRequest
                 'max:255',
                 $this->getUniqRule(),
             ],
-            'password' => 'sometimes|string|min:8|confirmed',
+            'password' => [
+                $this->getPasswordRequiredRule(),
+                'string',
+                'min:8',
+                'confirmed',
+            ],
             'file' => 'nullable|image|max:10240'
         ];
     }
@@ -49,5 +54,10 @@ class UserRequest extends FormRequest
         }
 
         return $rule;
+    }
+
+    private function getPasswordRequiredRule()
+    {
+        return $this->isMethod('patch') ? 'sometimes' : 'required';
     }
 }
