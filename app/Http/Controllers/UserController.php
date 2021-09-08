@@ -126,7 +126,7 @@ class UserController extends Controller
      */
     public function vote(VoteRequest $request, Show $show)
     {
-        Auth::user()->shows()->attach($show, ['vote' => $request->vote]);
+        Auth::user()->shows()->syncWithPivotValues($show, ['vote' => $request->vote], false);
 
         return $this->success(null, 201);
     }

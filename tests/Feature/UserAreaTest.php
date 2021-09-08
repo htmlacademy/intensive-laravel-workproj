@@ -140,9 +140,11 @@ class UserAreaTest extends TestCase
 
     public function testVoteForShow()
     {
-        Sanctum::actingAs(User::factory()->create());
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
 
         $show = Show::factory()->create();
+        $user->shows()->attach($show);
 
         $response = $this->postJson(route('user.shows.vote', $show), ['vote' => random_int(1,5)]);
         $response->assertStatus(201);
