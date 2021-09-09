@@ -7,21 +7,11 @@ HOST: https://laravel-api-intensive.localhost
 
 Этот раздел описывает методы регистрации и аутентификации пользователя
 
-## Получение CSRF Token [GET /api/csrf-token]
-
-Установка CSRF токена в `XSRF-TOKEN` cookie.
-
-+ Request (application/json)
-
-+ Response 204 (application/json)
-
 ## Регистрация пользователя [POST /api/register]
 
 Регистрация нового пользователя для получения доступа к персональной части сайта.
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
@@ -30,53 +20,21 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-+ Request (multipart/form-data; boundary={boundary value})
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-    + Body
-
-        --{boundary value}
-        Content-Disposition: form-data; name="email"
-
-        mail@example.com
-        --{boundary value}
-        Content-Disposition: form-data; name="name"
-
-        username
-        --{boundary value}
-        Content-Disposition: form-data; name="password"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name="password_confirmation"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
-        Content-Type: image/jpeg (according to the type of the uploaded file)
-
-        {file content}
-        --{boundary value}--
-
-+ Response 201 (application/json)
-
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
 
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "name": [
-                    "The name field is required."
+                    "Поле Имя обязательно для заполнения."
                 ],
                 "email": [
-                    "The email field is required."
+                    "Поле E-Mail адрес обязательно для заполнения."
                 ],
                 "password": [
-                    "The password field is required."
+                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
@@ -84,8 +42,6 @@ HOST: https://laravel-api-intensive.localhost
 ## Авторизация [POST /api/login]
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + password: 12345678 (required) - пароль
@@ -93,26 +49,22 @@ HOST: https://laravel-api-intensive.localhost
 + Response 200 (application/json)
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
 
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "email": [
-                    "The email field is required."
+                    "Поле E-Mail адрес обязательно для заполнения."
                 ],
                 "password": [
-                    "The password field is required."
+                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
 
 + Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
     + Body
         {
             "email": "notexisted@example.com",
@@ -122,11 +74,11 @@ HOST: https://laravel-api-intensive.localhost
 + Response 422 (application/json)
 
         {
-            "message": "The given data was invalid.",
+            "message": "Неверное имя пользователя или пароль.",
             "errors": {
-                "email": [
-                    "These credentials do not match our records."
-                ]
+                "exception": {
+                    "name": "HttpException"
+                }
             }
         }
 
@@ -134,77 +86,9 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 204 (application/json)
-
-## Обновление профиля [PATCH /api/register]
-
-+ Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
-    + Attributes
-        + email: mail@example.com (required) - email адрес пользователя
-        + name: username (required) - имя пользователя
-        + password: 12345678 (required) - пароль
-        + password_confirmation: 12345678 (required) - подтверждение пароля
-
-+ Response 201 (application/json)
-
-+ Request (multipart/form-data; boundary={boundary value})
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
-    + Body
-
-        --{boundary value}
-        Content-Disposition: form-data; name="email"
-
-        mail@example.com
-        --{boundary value}
-        Content-Disposition: form-data; name="name"
-
-        username
-        --{boundary value}
-        Content-Disposition: form-data; name="password"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name="password_confirmation"
-
-        12345678
-        --{boundary value}
-        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
-        Content-Type: image/jpeg (according to the type of the uploaded file)
-
-        {file content}
-        --{boundary value}--
-
-+ Response 201 (application/json)
-
-+ Request (application/json)
-    + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
-
-+ Response 422 (application/json)
-
-        {
-            "message": "The given data was invalid.",
-            "errors": {
-                "name": [
-                    "The name field is required."
-                ],
-                "email": [
-                    "The email field is required."
-                ],
-                "password": [
-                    "The password field is required."
-                ]
-            }
-        }
 
 # Group Shows
 
@@ -239,7 +123,8 @@ HOST: https://laravel-api-intensive.localhost
                     },
                 ],
                 "watch_status": "string",
-                "watched_episodes": 0
+                "watched_episodes": 0,
+                "user_vote": 0
             },
         ]
 
@@ -268,7 +153,8 @@ HOST: https://laravel-api-intensive.localhost
                 },
             ],
             "watch_status": "string",
-            "watched_episodes": 0
+            "watched_episodes": 0,
+            "user_vote": 0
         }
 
 ## Получение списка жанров [GET /api/genres]
@@ -359,11 +245,10 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "content": "text"
+            "text": "text"
         }
 
 + Response 201 (application/json)
@@ -372,8 +257,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Attributes
         + imdb: tt0944947 (string, required) - imdb id вида tt0944947
 
@@ -381,8 +265,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
     {
         "imdb": "tt0944947"
@@ -390,18 +273,17 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 422 (application/json)
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "imdb": [
-                    "This show already exists."
+                    "Такой сериал уже есть."
                 ]
             }
         }
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
     {
         "imdb": "944947"
@@ -409,15 +291,80 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 422 (application/json)
         {
-            "message": "The given data was invalid.",
+            "message": "Переданные данные не корректны.",
             "errors": {
                 "imdb": [
-                    "This imdb is invalid."
+                    "Идентификатор imdb должен быть в формате tt0000000."
                 ]
             }
         }
 
 # Group UserArea
+
+## Обновление профиля [PATCH /api/user]
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+    + Attributes
+        + email: mail@example.com (required) - email адрес пользователя
+        + name: username (required) - имя пользователя
+        + password: 12345678 (required) - пароль
+        + password_confirmation: 12345678 (required) - подтверждение пароля
+
++ Response 200 (application/json)
+
++ Request (multipart/form-data; boundary={boundary value})
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+    + Body
+
+        --{boundary value}
+        Content-Disposition: form-data; name="email"
+
+        mail@example.com
+        --{boundary value}
+        Content-Disposition: form-data; name="name"
+
+        username
+        --{boundary value}
+        Content-Disposition: form-data; name="password"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name="password_confirmation"
+
+        12345678
+        --{boundary value}
+        Content-Disposition: form-data; name='file'; filename='avatar.jpg'
+        Content-Type: image/jpeg (according to the type of the uploaded file)
+
+        {file content}
+        --{boundary value}--
+
++ Response 200 (application/json)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+
+        {
+            "message": "Переданные данные не корректны.",
+            "errors": {
+                "name": [
+                    "Поле Имя обязательно для заполнения."
+                ],
+                "email": [
+                    "Поле E-Mail адрес обязательно для заполнения."
+                ],
+                "password": [
+                    "Поле Пароль обязательно для заполнения."
+                ]
+            }
+        }
+
 
 ## Получение списка просматриваемых сериалов пользователя [GET /api/user/shows]
 
@@ -438,7 +385,8 @@ HOST: https://laravel-api-intensive.localhost
                 "total_seasons": 0,
                 "total_episodes": 0,
                 "watch_status": "string",
-                "watched_episodes": 0
+                "watched_episodes": 0,
+                "user_vote": 0
             }
 
 ## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
@@ -470,8 +418,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
 
@@ -492,8 +439,7 @@ HOST: https://laravel-api-intensive.localhost
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
 
@@ -506,41 +452,37 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
-## Добавление оценки сериалу [POST /api/user/shows/rating/{show}]
+## Добавление оценки сериалу [POST /api/user/shows/{show}/vote]
 
 + Parameters
     + show: `1` (number) - id идентификатор сериала.
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie (если запрос выполняется не с того же домена где находится api server)
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "rating": 5
+            "vote": 5
         }
 
 + Response 201 (application/json)
 
 + Request (application/json)
     + Headers
-        X-XSRF-TOKEN: CSRF-token из XSRF-TOKEN cookie
-        Authorization: auth token полученный после регистрации или аутентификации (required)
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
     + Body
         {
-            "rating": 10
+            "vote": 10
         }
 
 + Response 422 (application/json)
     {
-        "message": "The given data was invalid.",
+        "message": "Переданные данные не корректны.",
         "errors": {
-            "rating": [
-                "The rating field must be between 1 and 5."
+            "vote": [
+                "Поле vote должно быть между 1 и 5."
             ]
         }
     }
 
-// todo добавить в проект файлы локализации ошибок и локализовать ошибки в документации
-
-// документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html`
+<!--  документация генерится с помощью [aglio](https://github.com/danielgtaylor/aglio): `aglio -i index.apib -o index.html` -->

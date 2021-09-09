@@ -7,6 +7,7 @@ use App\Models\Episode;
 use App\Models\Show;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CommentsTest extends TestCase
@@ -26,7 +27,7 @@ class CommentsTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['count' => $count]);
-        $response->assertJsonCount($count, 'comments');
+        $response->assertJsonCount($count, 'data.comments');
         $response->assertJsonFragment([
             'id' => $comment->id,
             'comment' => $comment->comment,
@@ -37,5 +38,22 @@ class CommentsTest extends TestCase
                 'avatar' => $comment->user->avatar,
             ],
         ]);
+    }
+
+    public function testAddEpisodeComment()
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $episode = Episode::factory()->has(
+            Comment::factory()->for(User::factory()->create())
+        )->for(Show::factory())->create();
+
+        $newComment = Comment::factory()->make();
+
+        $response = $this->postJson(route('comments.store', [
+            'episode' => $episode,
+            'comment' => $episode->comments()->first()
+        ]), ['text' => $newComment->comment]);
+
+        $response->assertStatus(201);
     }
 }

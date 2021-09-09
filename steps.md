@@ -67,3 +67,12 @@ https://laravel.com/docs/8.x/eloquent#generating-model-classes
 Возвращаем auth token в методах register и login.
 
 Используем полученный токен в методах закрытых мидлварью `auth:sanctum`.
+
+### Добавляем логику 
+
+Используем FormRequest для валидации получаемых данных.  
+Используем Route Model Binding https://laravel.com/docs/8.x/routing#route-model-binding для получения данных в контроллере.  
+
+Используем классы обертки для возвращения ответов в едином формате (`App\Http\Responses`).  
+Для возвращения ответа из контроллера используем вспомогательные методы объявленные в базовом контроллере (`\App\Http\Controllers\Controller`).  
+Оборачиваем ответ с ошибками в ExceptionHandler (`\App\Exceptions\Handler`).  
