@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddShowRequest;
+use App\Jobs\AddShow;
 use App\Models\Show;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +33,8 @@ class ShowController extends Controller
 
     public function request(AddShowRequest $request)
     {
+        AddShow::dispatch($request->imdb);
+
         return $this->success(null, 201);
     }
 }

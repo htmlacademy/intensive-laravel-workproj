@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'tvmaze' => [
+        'url' => env('TVMAZE_URL', 'https://api.tvmaze.com/'),
+    ],
+
 ];
