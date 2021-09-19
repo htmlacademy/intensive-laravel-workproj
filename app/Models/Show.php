@@ -31,6 +31,15 @@ class Show extends Model
         'pivot',
     ];
 
+    protected $fillable = [
+      'title',
+      'title_original',
+      'description',
+      'year',
+      'status',
+      'imdbId',
+    ];
+
     public function getTotalSeasonsAttribute()
     {
         return $this->episodes()->groupBy('season')->count();

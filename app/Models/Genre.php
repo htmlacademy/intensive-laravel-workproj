@@ -15,6 +15,11 @@ class Genre extends Model
         'title',
     ];
 
+    protected $fillable = [
+        'title',
+        'title_en',
+    ];
+
     public function shows(): BelongsToMany
     {
         return $this->belongsToMany(Show::class);

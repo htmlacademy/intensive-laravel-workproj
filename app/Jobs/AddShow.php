@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Genre;
 use App\Support\Import\ImportRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,6 +30,17 @@ class AddShow implements ShouldQueue
      */
     public function handle(ImportRepository $repository)
     {
-        $show = $repository->getShow($this->imdbId);
+        list('show' => $show, 'genres' => $genres) = $repository->getShow($this->imdbId);
+
+        $genresIds = [];
+
+        foreach ($genres as $genre) {
+            $genresIds[] = Genre::firstOrCreate(['title_en' => $genre], ['title' => $genre])->id;
+        }
+
+        $show->save();
+        $show->genres()->attach($genresIds);
+
+        // todo сохранять эпизоды
     }
 }

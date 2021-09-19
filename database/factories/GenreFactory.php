@@ -23,6 +23,7 @@ class GenreFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
+            'title_en' => $this->faker->word,
         ];
     }
 }
