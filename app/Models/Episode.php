@@ -27,6 +27,14 @@ class Episode extends Model
         'updated_at',
     ];
 
+    protected $fillable = [
+        'title',
+        'season',
+        'episode_number',
+        'air_at',
+        'show_id',
+    ];
+
     public function show(): BelongsTo
     {
         return $this->belongsTo(Show::class);

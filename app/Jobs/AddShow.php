@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class AddShow implements ShouldQueue
 {
@@ -38,9 +39,12 @@ class AddShow implements ShouldQueue
             $genresIds[] = Genre::firstOrCreate(['title_en' => $genre], ['title' => $genre])->id;
         }
 
+        $episodes = $repository->getEpisodes($this->imdbId);
+
+        DB::beginTransaction();
         $show->save();
         $show->genres()->attach($genresIds);
-
-        // todo сохранять эпизоды
+        $show->episodes()->saveMany($episodes);
+        DB::commit();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Support\Import;
 
+use Illuminate\Support\Collection;
+
 interface ImportRepository
 {
     /**
@@ -10,5 +12,9 @@ interface ImportRepository
      */
     public function getShow(string $imdbId):array;
 
-    public function getEpisodes(string $imdbId):array;
+    /**
+     * @param string $imdbId
+     * @return Collection
+     */
+    public function getEpisodes(string $imdbId):Collection;
 }

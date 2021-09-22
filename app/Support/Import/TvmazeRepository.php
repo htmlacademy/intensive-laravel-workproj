@@ -3,7 +3,9 @@
 
 namespace App\Support\Import;
 
+use App\Models\Episode;
 use App\Models\Show;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class TvmazeRepository implements ImportRepository
@@ -21,7 +23,7 @@ class TvmazeRepository implements ImportRepository
             'title_original' =>   $data['name'],
             'description' => strip_tags($data['summary']),
             'year' => date('Y', strtotime($data['premiered'])),
-            'status' => self::STATUSES[$data['status']],
+            'status' => self::STATUSES[$data['status']] ?? strtolower($data['status']),
             'imdbId' => $imdbId,
         ]);
 
@@ -31,9 +33,19 @@ class TvmazeRepository implements ImportRepository
         ];
     }
 
-    public function getEpisodes(string $imdbId): array
+    public function getEpisodes(string $imdbId): Collection
     {
-        // TODO: Implement getEpisodes() method.
+        $show = $this->api('lookup/shows', ['imdb' => $imdbId]);
+
+        $data = $this->api("/shows/{$show['id']}/episodes")->collect();
+
+        return $data->map(fn($value) => new Episode([
+            'title' => $value['name'],
+            'season' => $value['season'],
+            'episode_number' => $value['number'],
+            'air_at' => $value['airstamp'],
+            'show_id' => $show['id'],
+        ]));
     }
 
     private function api(string $path, array $params = [])
