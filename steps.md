@@ -35,6 +35,7 @@ https://laravel.com/docs/8.x/eloquent#generating-model-classes
 - Для приведения типов возвращаемых данных casting https://laravel.com/docs/8.x/eloquent-mutators#attribute-casting
 - Если вы будете использовать sqlite движок БД для запуска тестов, в моделях придется указать casts для int полей указывающих на связанную сущность
 - Массивы $hidden и $visible позволяют управлять отображаемыми атрибутами, которые мы отдаем "наружу" https://laravel.com/docs/8.x/eloquent-serialization#hiding-attributes-from-json
+- Даты created_at и updated_at устанавливаются автоматически при создании и обновлении сущностей. Это поведение можно отключить установив переменную $timestamps = false (что бы выключить обновление обоих полей), или одну из констант CREATED_AT/UPDATED_AT для индивидуального выключения.  
 - Описываем связи моделей https://laravel.com/docs/8.x/eloquent-relationships
 
 ## Создаем сиды для заполнения БД фейковыми данными

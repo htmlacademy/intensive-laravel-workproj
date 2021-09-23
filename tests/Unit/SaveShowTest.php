@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Jobs\AddShow;
+use App\Jobs\SaveShow;
 use App\Models\Genre;
 use App\Models\Show;
 use App\Support\Import\ImportRepository;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
-class AddShowTest extends TestCase
+class SaveShowTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -26,6 +26,8 @@ class AddShowTest extends TestCase
             $mock->shouldReceive('getEpisodes')->andReturn(collect())->once();
         });
 
-        AddShow::dispatchSync('tt0944947');
+        SaveShow::dispatchSync('tt0944947');
+
+        // todo проверить сохранение
     }
 }

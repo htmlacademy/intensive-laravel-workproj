@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Show extends Model
 {
+    const UPDATED_AT = null;
     private const USER_WATCHING_STATUS = 'watching';
     private const USER_WATCHED_STATUS = 'watched';
 
@@ -22,7 +23,8 @@ class Show extends Model
     protected $appends = ['total_seasons', 'watch_status', 'watched_episodes', 'user_vote', 'rating'];
 
     protected $casts = [
-        'total_episodes' => 'int'
+        'total_episodes' => 'int',
+        'updated_at' => 'datetime',
     ];
 
     protected $hidden = [
@@ -38,6 +40,7 @@ class Show extends Model
       'year',
       'status',
       'imdbId',
+      'updated_at',
     ];
 
     public function getTotalSeasonsAttribute()

@@ -12,19 +12,22 @@ class TvmazeRepository implements ImportRepository
 {
     private const STATUSES = [
       'Ended' => 'ended',
+      'Running' => 'running',
+      'To Be Determined' => 'pause',
     ];
 
     public function getShow(string $imdbId): array
     {
         $data = $this->api('lookup/shows', ['imdb' => $imdbId]);
 
-        $show = new Show([
+        $show = Show::firstOrNew(['imdbId' => $imdbId]);
+        $show->fill([
             'title' =>   $data['name'],
             'title_original' =>   $data['name'],
             'description' => strip_tags($data['summary']),
             'year' => date('Y', strtotime($data['premiered'])),
             'status' => self::STATUSES[$data['status']] ?? strtolower($data['status']),
-            'imdbId' => $imdbId,
+            'updated_at' => $data['updated']
         ]);
 
         return [
@@ -39,13 +42,19 @@ class TvmazeRepository implements ImportRepository
 
         $data = $this->api("/shows/{$show['id']}/episodes")->collect();
 
-        return $data->map(fn($value) => new Episode([
-            'title' => $value['name'],
-            'season' => $value['season'],
-            'episode_number' => $value['number'],
-            'air_at' => $value['airstamp'],
-            'show_id' => $show['id'],
-        ]));
+        return $data->map(function ($value) use ($show) {
+            $episode = Episode::firstOrNew([
+                'season' => $value['season'],
+                'episode_number' => $value['number'],
+            ]);
+            $episode->fill([
+                'title' => $value['name'],
+                'air_at' => $value['airstamp'],
+                'show_id' => $show['id'],
+            ]);
+
+            return $episode;
+        });
     }
 
     private function api(string $path, array $params = [])

@@ -6,11 +6,14 @@ namespace Tests\Unit;
 use App\Models\Episode;
 use App\Models\Show;
 use App\Support\Import\TvmazeRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class TvmazeRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
+
     private TvmazeRepository $repository;
 
     protected function setUp(): void
