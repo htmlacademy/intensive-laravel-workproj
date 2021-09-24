@@ -8,13 +8,13 @@ interface ImportRepository
 {
     /**
      * @param string $imdbId
-     * @return array{show: \App\Models\Show, genres: array}
+     * @return array{show: \App\Models\Show, genres: array}|null
      */
-    public function getShow(string $imdbId):array;
+    public function getShow(string $imdbId): ?array;
 
     /**
      * @param string $imdbId
-     * @return Collection
+     * @return Collection|null
      */
-    public function getEpisodes(string $imdbId):Collection;
+    public function getEpisodes(string $imdbId): ?Collection;
 }

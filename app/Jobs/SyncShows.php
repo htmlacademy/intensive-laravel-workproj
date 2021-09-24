@@ -34,11 +34,11 @@ class SyncShows implements ShouldQueue
         // допустимо для малых объемов, но в реальном проекте
         // следует получать список обновленных сериалов от источника данных,
         // если это возможно
-        Show::chunk(1000, function ($shows) use ($repository) {
+        Show::whereNotNull('imdbId')->chunk(1000, function ($shows) use ($repository) {
             /** @var Show $show */
             foreach ($shows as $show) {
                 $data = $repository->getShow($show->imdbId); // стоит выполнять проверку на rate limits
-                if ($data['show']->updated_at > $show->updated_at) {
+                if (isset($data['show']) && $data['show']->updated_at > $show->updated_at) {
                     SaveShow::dispatch($data);
                 }
             }

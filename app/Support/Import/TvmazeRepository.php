@@ -5,6 +5,7 @@ namespace App\Support\Import;
 
 use App\Models\Episode;
 use App\Models\Show;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -16,14 +17,18 @@ class TvmazeRepository implements ImportRepository
       'To Be Determined' => 'pause',
     ];
 
-    public function getShow(string $imdbId): array
+    public function getShow(string $imdbId): ?array
     {
         $data = $this->api('lookup/shows', ['imdb' => $imdbId]);
 
+        if ($data->clientError()) {
+            return null;
+        }
+
         $show = Show::firstOrNew(['imdbId' => $imdbId]);
         $show->fill([
-            'title' =>   $data['name'],
-            'title_original' =>   $data['name'],
+            'title' => $show['title'] ?? $data['name'],
+            'title_original' => $data['name'],
             'description' => strip_tags($data['summary']),
             'year' => date('Y', strtotime($data['premiered'])),
             'status' => self::STATUSES[$data['status']] ?? strtolower($data['status']),
@@ -36,9 +41,13 @@ class TvmazeRepository implements ImportRepository
         ];
     }
 
-    public function getEpisodes(string $imdbId): Collection
+    public function getEpisodes(string $imdbId): ?Collection
     {
         $show = $this->api('lookup/shows', ['imdb' => $imdbId]);
+
+        if ($show->clientError()) {
+            return null;
+        }
 
         $data = $this->api("/shows/{$show['id']}/episodes")->collect();
 
@@ -49,8 +58,7 @@ class TvmazeRepository implements ImportRepository
             ]);
             $episode->fill([
                 'title' => $value['name'],
-                'air_at' => $value['airstamp'],
-                'show_id' => $show['id'],
+                'air_at' => Carbon::parse($value['airstamp'])->toDateTimeString(),
             ]);
 
             return $episode;
