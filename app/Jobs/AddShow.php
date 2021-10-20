@@ -29,6 +29,10 @@ class AddShow implements ShouldQueue
      */
     public function handle(ImportRepository $repository)
     {
-        SaveShow::dispatch($repository->getShow($this->imdbId));
+        $data = $repository->getShow($this->imdbId);
+
+        if ($data) {
+            SaveShow::dispatch($data);
+        }
     }
 }
