@@ -31,4 +31,20 @@ class AddShowTest extends TestCase
             return $job->data['show'] === $show;
         });
     }
+
+    /**
+     * Проверка не вызова задачи сохранения сериала, если репозиторий вернул пустой ответ.
+     */
+    public function testNotCallingSubJobForEmptyShow()
+    {
+        Queue::fake();
+
+        $repository = $this->mock(ImportRepository::class, function (MockInterface $mock) {
+            $mock->shouldReceive('getShow')->andReturn(null)->once();
+        });
+
+        (new AddShow('tt0944947'))->handle($repository);
+
+        Queue::assertNotPushed(SaveShow::class);
+    }
 }
