@@ -45,7 +45,7 @@ class Show extends Model
 
     public function getTotalSeasonsAttribute()
     {
-        return $this->episodes()->groupBy('season')->count();
+        return $this->episodes()->distinct()->count('season');
     }
 
     public function episodes(): HasMany
