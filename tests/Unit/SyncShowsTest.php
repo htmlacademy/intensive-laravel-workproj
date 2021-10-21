@@ -15,8 +15,8 @@ class SyncShowsTest extends TestCase
 
     public function testProcessingJob()
     {
-        $show = Show::factory()->create(['imdbId' => 'tt0944947','updated_at' => now()->subMonth()]);
-        $showNew = Show::factory()->make(['imdbId' => 'tt0944947','updated_at' => now()]);
+        $show = Show::factory()->create(['imdb_id' => 'tt0944947','updated_at' => now()->subMonth()]);
+        $showNew = Show::factory()->make(['imdb_id' => 'tt0944947','updated_at' => now()]);
         $show->fill($showNew->getAttributes());
 
         $this->mock(ImportRepository::class, function (MockInterface $mock) use ($show) {

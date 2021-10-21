@@ -41,7 +41,7 @@ class SaveShow implements ShouldQueue
             $genresIds[] = Genre::firstOrCreate(['title_en' => $genre], ['title' => $genre])->id;
         }
 
-        $episodes = $repository->getEpisodes($show->imdbId);
+        $episodes = $repository->getEpisodes($show->imdb_id);
 
         DB::beginTransaction();
         $show->save();

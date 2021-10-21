@@ -25,7 +25,7 @@ class TvmazeRepository implements ImportRepository
             return null;
         }
 
-        $show = Show::firstOrNew(['imdbId' => $imdbId]);
+        $show = Show::firstOrNew(['imdb_id' => $imdbId]);
         $show->fill([
             'title' => $show['title'] ?? $data['name'],
             'title_original' => $data['name'],

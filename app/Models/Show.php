@@ -39,7 +39,7 @@ class Show extends Model
       'description',
       'year',
       'status',
-      'imdbId',
+      'imdb_id',
       'updated_at',
     ];
 
