@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class Show extends Model
 {
     const UPDATED_AT = null;
-    private const USER_WATCHING_STATUS = 'watching';
-    private const USER_WATCHED_STATUS = 'watched';
+    public const USER_WATCHING_STATUS = 'watching';
+    public const USER_WATCHED_STATUS = 'watched';
 
     use HasFactory;
 
