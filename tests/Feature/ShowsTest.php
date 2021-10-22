@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\AddShow;
 use App\Models\Show;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -44,9 +46,13 @@ class ShowsTest extends TestCase
 
     public function testRequestAddingShow()
     {
+        Queue::fake();
+
         Sanctum::actingAs(User::factory()->create());
-        
+
         $response = $this->postJson(route('shows.request'), ['imdb' => 'tt001']);
+
+        Queue::assertPushed(AddShow::class);
 
         $response->assertStatus(201);
     }

@@ -24,7 +24,7 @@ class AddShowRequest extends FormRequest
     public function rules()
     {
         return [
-            'imdb' => ['required', 'regex:/^tt\d+$/', 'unique:shows,imdbId']
+            'imdb' => ['required', 'regex:/^tt\d+$/', 'unique:shows,imdb_id']
         ];
     }
 

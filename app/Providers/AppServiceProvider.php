@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Support\Import\ImportRepository;
+use App\Support\Import\TvmazeRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(ImportRepository::class, TvmazeRepository::class);
     }
 
     /**
