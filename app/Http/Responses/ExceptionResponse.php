@@ -49,7 +49,7 @@ class ExceptionResponse extends Fail
 
     private function getCode()
     {
-        return $this->isHttpException($this->exception) ? $this->exception->getStatusCode() : $this->statusCode;
+        return method_exists($this->exception, 'getStatusCode') ? $this->exception->getStatusCode() : $this->statusCode;
     }
 
     /**

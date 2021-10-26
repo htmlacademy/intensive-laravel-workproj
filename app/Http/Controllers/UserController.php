@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\RequestException;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\VoteRequest;
 use App\Models\Episode;
@@ -86,6 +87,8 @@ class UserController extends Controller
      */
     public function unwatchShow(Show $show)
     {
+        $this->validateWatchingShow($show);
+
         Auth::user()->shows()->detach($show);
 
         return $this->success(null, 201);
@@ -99,6 +102,8 @@ class UserController extends Controller
      */
     public function watchEpisode(Episode $episode)
     {
+        $this->validateWatchingEpisode($episode);
+
         Auth::user()->episodes()->attach($episode);
 
         return $this->success(null, 201);
@@ -112,6 +117,8 @@ class UserController extends Controller
      */
     public function unwatchEpisode(Episode $episode)
     {
+        $this->validateWatchingEpisode($episode, true);
+
         Auth::user()->episodes()->detach($episode);
 
         return $this->success(null, 201);
@@ -129,5 +136,25 @@ class UserController extends Controller
         Auth::user()->shows()->syncWithPivotValues($show, ['vote' => $request->vote], false);
 
         return $this->success(null, 201);
+    }
+
+    private function validateWatchingShow(Show $show)
+    {
+        $user = Auth::user();
+
+        if(!$user->shows()->where('show_id', $show->id)->exists()) {
+            throw new RequestException('Сериал не входит список просматриваемых пользователем.');
+        }
+    }
+
+    private function validateWatchingEpisode(Episode $episode, bool $unwatch = false)
+    {
+        $user = Auth::user();
+
+        $this->validateWatchingShow($episode->show);
+
+        if($unwatch && !$user->episodes()->where('episode_id', $episode->id)->exists()) {
+            throw new RequestException('Эпизод не входит список просматриваемых пользователем.');
+        }
     }
 }
