@@ -3,7 +3,6 @@
 namespace App\Http\Responses;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class ExceptionResponse extends Fail
@@ -50,16 +49,5 @@ class ExceptionResponse extends Fail
     private function getCode()
     {
         return method_exists($this->exception, 'getStatusCode') ? $this->exception->getStatusCode() : $this->statusCode;
-    }
-
-    /**
-     * Determine if the given exception is an HTTP exception.
-     *
-     * @param  Throwable  $e
-     * @return bool
-     */
-    protected function isHttpException(Throwable $e)
-    {
-        return $e instanceof HttpExceptionInterface;
     }
 }
