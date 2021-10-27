@@ -56,4 +56,45 @@ class CommentsTest extends TestCase
 
         $response->assertStatus(201);
     }
+
+    /**
+     * Ожидается получение ошибки валидации,
+     * в случае отправки запроса на добавления комментария, без отправки текста.
+     */
+    public function testValidationErrorFOrAddEpisodeCommentRoute()
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $episode = Episode::factory()->has(
+            Comment::factory()->for(User::factory()->create())
+        )->for(Show::factory())->create();
+
+        $response = $this->postJson(route('comments.store', [
+            'episode' => $episode,
+            'comment' => $episode->comments()->first()
+        ]));
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['errors' => ['text']]);
+    }
+
+    /**
+     * Ожидается получение ошибки аутентификации,
+     * если запрос на добавление комментария выполняется не аутентифицированным пользователем.
+     */
+    public function testAuthErrorFOrAddEpisodeCommentRoute()
+    {
+        $episode = Episode::factory()->has(
+            Comment::factory()->for(User::factory()->create())
+        )->for(Show::factory())->create();
+
+        $newComment = Comment::factory()->make();
+
+        $response = $this->postJson(route('comments.store', [
+            'episode' => $episode,
+            'comment' => $episode->comments()->first()
+        ]), ['text' => $newComment->comment]);
+
+        $response->assertStatus(401);
+        $response->assertJsonFragment(['message' => 'Запрос требует аутентификации.']);
+    }
 }

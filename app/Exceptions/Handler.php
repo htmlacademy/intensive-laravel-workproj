@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Http\Responses\ExceptionResponse;
 use App\Http\Responses\ValidationExceptionResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -46,6 +47,14 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ValidationException) {
             return new ValidationExceptionResponse($exception);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            $exception = new AuthenticationException(
+                'Запрос требует аутентификации.',
+                $exception->guards(),
+                $exception->redirectTo()
+            );
         }
 
         return parent::render($request, $exception);

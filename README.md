@@ -51,3 +51,9 @@
 - Сгенерировать ключ приложения `vendor/bin/sail artisan key:generate`
 - Выполнить миграции `vendor/bin/sail artisan migrate` (с флагом `--seed` для заполнения сидов, при необходимости)
 - Настроить алиас для выполнения команд sail по желанию https://laravel.com/docs/8.x/sail#configuring-a-bash-alias
+
+## Запуск тестов
+
+`sail artisan test` (используя docker) или `php artisan test` (напрямую).
+
+Или прямо используя `vendor/bin/phpunit` без дополнительных оберток. 

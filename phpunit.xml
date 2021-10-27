@@ -10,13 +10,12 @@
     convertWarningsToExceptions="true"
     processIsolation="true"
     stopOnFailure="false"
-    printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
 >
     <testsuites>
-<!--        <testsuite name="Unit">-->
-<!--            <directory suffix="Test.php">./tests/Unit</directory>-->
-<!--        </testsuite>-->
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>

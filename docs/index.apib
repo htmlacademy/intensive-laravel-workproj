@@ -19,11 +19,21 @@ HOST: https://laravel-api-intensive.localhost
         + password_confirmation: 12345678 (required) - подтверждение пароля
 
 + Response 201 (application/json)
+    ```
+    {
+        "data": {
+            "token": "string",
+            "user" {
+                "name": "string"
+            }
+        }
+    }
+    ```
 
 + Request (application/json)
 
 + Response 422 (application/json)
-
+    ```
         {
             "message": "Переданные данные не корректны.",
             "errors": {
@@ -38,6 +48,7 @@ HOST: https://laravel-api-intensive.localhost
                 ]
             }
         }
+    ```
 
 ## Авторизация [POST /api/login]
 
@@ -47,11 +58,17 @@ HOST: https://laravel-api-intensive.localhost
         + password: 12345678 (required) - пароль
 
 + Response 200 (application/json)
-
+    ```
+    {
+        "data": {
+            "token": "string"
+        }
+    }
+    ```
 + Request (application/json)
 
 + Response 422 (application/json)
-
+    ```
         {
             "message": "Переданные данные не корректны.",
             "errors": {
@@ -63,6 +80,7 @@ HOST: https://laravel-api-intensive.localhost
                 ]
             }
         }
+    ```
 
 + Request (application/json)
     + Body
@@ -72,7 +90,7 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 + Response 422 (application/json)
-
+    ```
         {
             "message": "Неверное имя пользователя или пароль.",
             "errors": {
@@ -81,6 +99,7 @@ HOST: https://laravel-api-intensive.localhost
                 }
             }
         }
+    ```
 
 ## Выход [POST /api/logout]
 
@@ -105,8 +124,9 @@ HOST: https://laravel-api-intensive.localhost
         + search: null (optional) - фильтрация по имени
 
 + Response 200 (application/json)
-
-        [
+    ```
+    {
+        "data": [
             {
                 "id": 0,
                 "title": "string",
@@ -127,6 +147,8 @@ HOST: https://laravel-api-intensive.localhost
                 "user_vote": 0
             },
         ]
+    }
+    ```
 
 ## Получение информации о сериале [GET /api/shows/{show}]
 
@@ -136,8 +158,9 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
 
 + Response 200 (application/json)
-
-        {
+    ```
+    {
+        "data": {
             "id": 0,
             "title": "string",
             "title_original": "string",
@@ -156,19 +179,24 @@ HOST: https://laravel-api-intensive.localhost
             "watched_episodes": 0,
             "user_vote": 0
         }
+    }
+    ```
 
 ## Получение списка жанров [GET /api/genres]
 
 + Request (application/json)
 
 + Response 200 (application/json)
-
-        [
+    ```
+    {
+        "data": [
             {
-            "id": 0,
-            "title": "string"
+                "id": 0,
+                "title": "string"
             },
         ]
+    }
+    ```
 
 ## Получение списка эпизодов сериала [GET /api/shows/{show}/episodes]
 
@@ -178,8 +206,9 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
 
 + Response 200 (application/json)
-
-        [
+    ```
+    {
+        "data": [
             {
                 "id": 0,
                 "title": "string",
@@ -191,6 +220,8 @@ HOST: https://laravel-api-intensive.localhost
                 "watched": "boolean",
             },
         ]
+    }
+    ```
 
 ## Получение информации об эпизоде [GET /api/episode/{episode}]
 
@@ -200,8 +231,9 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
 
 + Response 200 (application/json)
-
-        {
+    ```
+    {
+        "data": {
             "id": 0,
             "title": "string",
             "show_id": 0,
@@ -211,6 +243,8 @@ HOST: https://laravel-api-intensive.localhost
             "comments_count": 0,
             "watched": "boolean",
         }
+    }
+    ```
 
 ## Получение списка комментариев эпизода [GET /api/episode/{episode}/comments]
 
@@ -220,8 +254,9 @@ HOST: https://laravel-api-intensive.localhost
 + Request (application/json)
 
 + Response 200 (application/json)
-
-        {
+    ```
+    {
+        "data": {
             "count": 0,
             "comments": [
                 {
@@ -236,6 +271,8 @@ HOST: https://laravel-api-intensive.localhost
                 },
             ]
         }
+    }
+    ```
 
 ## Добавление комментария к эпизоду [POST /api/episode/{episode}/comments/{comment}]
 
@@ -309,10 +346,19 @@ HOST: https://laravel-api-intensive.localhost
     + Attributes
         + email: mail@example.com (required) - email адрес пользователя
         + name: username (required) - имя пользователя
-        + password: 12345678 (required) - пароль
-        + password_confirmation: 12345678 (required) - подтверждение пароля
+        + password: 12345678 - пароль
+        + password_confirmation: 12345678 - подтверждение пароля
 
 + Response 200 (application/json)
+    ```
+    {
+        "data": {
+            "name": "string",
+            "email": "string",
+            "avatar": "string"
+        }
+    }
+    ```
 
 + Request (multipart/form-data; boundary={boundary value})
     + Headers
@@ -343,6 +389,15 @@ HOST: https://laravel-api-intensive.localhost
         --{boundary value}--
 
 + Response 200 (application/json)
+    ```
+    {
+        "data": {
+            "name": "string",
+            "email": "string",
+            "avatar": "string"
+        }
+    }
+    ```
 
 + Request (application/json)
     + Headers
@@ -358,9 +413,6 @@ HOST: https://laravel-api-intensive.localhost
                 ],
                 "email": [
                     "Поле E-Mail адрес обязательно для заполнения."
-                ],
-                "password": [
-                    "Поле Пароль обязательно для заполнения."
                 ]
             }
         }
@@ -373,21 +425,27 @@ HOST: https://laravel-api-intensive.localhost
 на основании этой информации можно принять решение о необходимости получения списка не просмотренных серий.
 
 + Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 200 (application/json)
-        {
-                "id": 0,
-                "title": "string",
-                "title_original": "string",
-                "status": "string",
-                "year": 0,
-                "rating": 0,
-                "total_seasons": 0,
-                "total_episodes": 0,
-                "watch_status": "string",
-                "watched_episodes": 0,
-                "user_vote": 0
-            }
+    ```
+    {
+        "data": {
+            "id": 0,
+            "title": "string",
+            "title_original": "string",
+            "status": "string",
+            "year": 0,
+            "rating": 0,
+            "total_seasons": 0,
+            "total_episodes": 0,
+            "watch_status": "string",
+            "watched_episodes": 0,
+            "user_vote": 0
+        }
+    }
+    ```
 
 ## Получение списка эпизодов отслеживаемого сериала не просмотренных пользователем [GET /api/user/shows/{show}/new-episodes]
 
@@ -395,10 +453,13 @@ HOST: https://laravel-api-intensive.localhost
     + show: `1` (number) - id идентификатор сериала.
 
 + Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 200 (application/json)
-
-        [
+    ```
+    {
+        "data": [
             {
                 "id": 0,
                 "title": "string",
@@ -410,6 +471,8 @@ HOST: https://laravel-api-intensive.localhost
                 "watched": "string",
             },
         ]
+    }
+    ```
 
 ## Добавление сериала в список просматриваемых [POST /api/user/shows/watch/{show}]
 
@@ -429,8 +492,19 @@ HOST: https://laravel-api-intensive.localhost
     + show: `1` (number) - id идентификатор сериала.
 
 + Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+    {
+        "message": "Сериал не входит список просматриваемых пользователем."
+    }
 
 ## Добавление эпизода в список просмотренных [POST /api/user/episodes/watch/{episode}]
 
@@ -443,14 +517,43 @@ HOST: https://laravel-api-intensive.localhost
 
 + Response 201 (application/json)
 
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+    {
+        "message": "Сериал не входит список просматриваемых пользователем."
+    }
+
 ## Удаление эпизода из списка просмотренных [DELETE /api/user/episodes/watch/{episode}]
 
 + Parameters
     + episode: `1` (number) - id идентификатор эпизода.
 
 + Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
 
 + Response 201 (application/json)
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+    {
+        "message": "Сериал не входит список просматриваемых пользователем."
+    }
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token полученный после регистрации или аутентификации (required)
+
++ Response 422 (application/json)
+    {
+        "message": "Эпизод не входит список просматриваемых пользователем."
+    }
 
 ## Добавление оценки сериалу [POST /api/user/shows/{show}/vote]
 

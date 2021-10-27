@@ -2,10 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\Jobs\SaveShow;
 use App\Jobs\SyncShows;
 use App\Models\Show;
 use App\Support\Import\ImportRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
@@ -13,19 +15,28 @@ class SyncShowsTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Проверка задачи обновления сериалов.
+     * Ожидается создание двух задач на обновление,
+     * для сериалов имеющих значение imdb_id в базе с отличной от полученной датой изменения.
+     */
     public function testProcessingJob()
     {
-        $show = Show::factory()->create(['imdb_id' => 'tt0944947','updated_at' => now()->subMonth()]);
-        $showNew = Show::factory()->make(['imdb_id' => 'tt0944947','updated_at' => now()]);
-        $show->fill($showNew->getAttributes());
+        Queue::fake();
 
-        $this->mock(ImportRepository::class, function (MockInterface $mock) use ($show) {
-            $mock->shouldReceive('getShow')->andReturn(['show' => $show, 'genres' => []]);
-            $mock->shouldReceive('getEpisodes')->andReturn(collect())->once();
+        Show::factory()->create(['imdb_id' => null, 'updated_at' => now()->subMonth()]); // imdb_id = null не проверяем
+        Show::factory()->create(['imdb_id' => 'tt01', 'updated_at' => now()]); // дата изменения будет той же, что и отдаст репозиторий
+        Show::factory()->create(['imdb_id' => 'tt02', 'updated_at' => now()->subMonth()]);
+        Show::factory()->create(['imdb_id' => 'tt03', 'updated_at' => now()->subWeek()]);
+
+        $showNew = Show::factory()->make(['updated_at' => now()]);
+
+        $repository = $this->mock(ImportRepository::class, function (MockInterface $mock) use ($showNew) {
+            $mock->shouldReceive('getShow')->andReturn(['show' => $showNew, 'genres' => []]);
         });
 
-        SyncShows::dispatchSync();
+        (new SyncShows())->handle($repository);
 
-        // todo проверить обновление текущей записи
+        Queue::assertPushed(SaveShow::class, 2);
     }
 }
