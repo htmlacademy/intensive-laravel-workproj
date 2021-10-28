@@ -29,5 +29,15 @@ class UsersDataSeeder extends Seeder
         );
 
         $user->shows()->sync(Show::inRandomOrder()->limit(3)->pluck('id'));
+
+        User::updateOrCreate(
+            ['email' => 'moderator@laravel.localhost'],
+            [
+                'email' => 'moderator@laravel.localhost',
+                'password' => '12345678',
+                'name' => 'moderator',
+                'role_id' => User::ROLE_MODERATOR,
+            ]
+        );
     }
 }
