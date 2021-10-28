@@ -25,6 +25,7 @@ Route::get('/shows/{show}/episodes', [\App\Http\Controllers\EpisodeController::c
 Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class, 'show'])->name('episodes.show');
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 Route::post('/episode/{episode}/comments/{comment?}', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth:sanctum')->name('comments.store');
+Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware(['auth:sanctum', 'role:isModerator'])->name('comments.destroy');
 
 Route::post('/shows', [\App\Http\Controllers\ShowController::class, 'request'])->middleware('auth:sanctum')->name('shows.request');
 
