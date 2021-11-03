@@ -14,6 +14,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const ROLE_USER = 0;
+    public const ROLE_MODERATOR = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,5 +60,9 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value){
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function isModerator() {
+        return $this->role_id === self::ROLE_MODERATOR;
     }
 }

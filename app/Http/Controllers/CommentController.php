@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentStoreRequest;
+use App\Models\Comment;
 use App\Models\Episode;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
@@ -36,6 +37,13 @@ class CommentController extends Controller
             'comment' => $request->text,
             'user_id' => Auth::id(),
         ]);
+
+        return $this->success(null, 201);
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
 
         return $this->success(null, 201);
     }

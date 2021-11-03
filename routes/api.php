@@ -18,12 +18,14 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->n
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->middleware('auth:sanctum')->name('auth.logout');
 
 Route::get('/genres', [\App\Http\Controllers\GenreController::class, 'index'])->name('genres.index');
+Route::patch('/genres/{genre}', [\App\Http\Controllers\GenreController::class, 'update'])->middleware('auth:sanctum')->name('genres.update');
 Route::get('/shows', [\App\Http\Controllers\ShowController::class, 'index'])->name('shows.index');
 Route::get('/shows/{show}', [\App\Http\Controllers\ShowController::class, 'show'])->name('shows.show');
 Route::get('/shows/{show}/episodes', [\App\Http\Controllers\EpisodeController::class, 'index'])->name('episodes.index');
 Route::get('/episode/{episode}', [\App\Http\Controllers\EpisodeController::class, 'show'])->name('episodes.show');
 Route::get('/episode/{episode}/comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
 Route::post('/episode/{episode}/comments/{comment?}', [\App\Http\Controllers\CommentController::class, 'store'])->middleware('auth:sanctum')->name('comments.store');
+Route::delete('/comments/{comment}', [\App\Http\Controllers\CommentController::class, 'destroy'])->middleware(['auth:sanctum', 'role:isModerator'])->name('comments.destroy');
 
 Route::post('/shows', [\App\Http\Controllers\ShowController::class, 'request'])->middleware('auth:sanctum')->name('shows.request');
 

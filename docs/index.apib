@@ -198,6 +198,87 @@ HOST: https://laravel-api-intensive.localhost
     }
     ```
 
+## Редактирование жанра [PATCH /api/genres/{genre}]
+
++ Parameters
+    + genre: `1` (number) - id идентификатор жанра.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token модератора полученный после регистрации или аутентификации (required)
+    + Body
+        ```
+        {
+            "title": "text"
+        }
+        ```
+
++ Response 200 (application/json)
+    ```
+    {
+        "data": [
+            {
+                "id": 0,
+                "title": "string"
+            },
+        ]
+    }
+    ```
+
++ Request (application/json)
+    + Body
+        ```
+        {
+            "title": "text"
+        }
+        ```
+
++ Response 401 (application/json)
+    ```
+    {
+        "message": "Запрос требует аутентификации."
+    }
+    ```
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token пользователя полученный после регистрации или аутентификации (required)
+    + Body
+        ```
+        {
+            "title": "text"
+        }
+        ```
+
++ Response 403 (application/json)
+    ```
+    {
+        "message": "Неавторизованное действие."
+    }
+    ```
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token модератора полученный после регистрации или аутентификации (required)
+    + Body
+        ```
+        {
+            "name": "text"
+        }
+        ```
+
++ Response 422 (application/json)
+    ```
+    {
+            "message": "Переданные данные не корректны.",
+            "errors": {
+                "title": [
+                    "Поле Наименование обязательно для заполнения."
+                ]
+            }
+        }
+    ```
+
 ## Получение списка эпизодов сериала [GET /api/shows/{show}/episodes]
 
 + Parameters
@@ -289,6 +370,38 @@ HOST: https://laravel-api-intensive.localhost
         }
 
 + Response 201 (application/json)
+
+## Удаление комментария [DELETE /api/comments/{comment}]
+
++ Parameters
+    + comment: `1` (number) - id идентификатор комментария.
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token модератора полученный после регистрации или аутентификации (required)
+
++ Response 201 (application/json)
+
+
++ Request (application/json)
+
++ Response 401 (application/json)
+    ```
+    {
+        "message": "Запрос требует аутентификации."
+    }
+    ```
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer {$token} - auth token пользователя полученный после регистрации или аутентификации (required)
+
++ Response 403 (application/json)
+    ```
+    {
+        "message": "Неавторизованное действие."
+    }
+    ```
 
 ## Запрос на добавление сериала [POST /api/shows]
 

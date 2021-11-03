@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Http\Responses\ExceptionResponse;
 use App\Http\Responses\ValidationExceptionResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -55,6 +56,10 @@ class Handler extends ExceptionHandler
                 $exception->guards(),
                 $exception->redirectTo()
             );
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            $exception = new AuthorizationException(trans($exception->getMessage()), previous:$exception);
         }
 
         return parent::render($request, $exception);

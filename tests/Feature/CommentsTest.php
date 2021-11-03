@@ -97,4 +97,38 @@ class CommentsTest extends TestCase
         $response->assertStatus(401);
         $response->assertJsonFragment(['message' => 'Запрос требует аутентификации.']);
     }
+
+    public function testDeleteComment()
+    {
+        Sanctum::actingAs(User::factory()->moderator()->create());
+        $episode = Episode::factory()->for(Show::factory())->create();
+        $comment = Comment::factory()->for(User::factory()->create())->for($episode)->create();
+
+        $response = $this->deleteJson(route('comments.destroy', $comment->id));
+
+        $response->assertStatus(201);
+    }
+
+    public function testDeleteCommentByGuest()
+    {
+        $episode = Episode::factory()->for(Show::factory())->create();
+        $comment = Comment::factory()->for(User::factory()->create())->for($episode)->create();
+
+        $response = $this->deleteJson(route('comments.destroy', $comment->id));
+
+        $response->assertStatus(401);
+        $response->assertJsonFragment(['message' => 'Запрос требует аутентификации.']);
+    }
+
+    public function testDeleteCommentByCommonUser()
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $episode = Episode::factory()->for(Show::factory())->create();
+        $comment = Comment::factory()->for(User::factory()->create())->for($episode)->create();
+
+        $response = $this->deleteJson(route('comments.destroy', $comment->id));
+
+        $response->assertStatus(403);
+        $response->assertJsonFragment(['message' => 'Неавторизованное действие.']);
+    }
 }
