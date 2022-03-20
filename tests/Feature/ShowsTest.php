@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Jobs\AddShow;
+use App\Models\Genre;
 use App\Models\Show;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +18,7 @@ class ShowsTest extends TestCase
     public function testGetShowsList()
     {
         $count = random_int(2, 10);
-        Show::factory()->count($count)->create();
+        Show::factory()->count($count)->hasAttached(Genre::factory())->create();
 
         $response = $this->getJson(route('shows.index'));
 

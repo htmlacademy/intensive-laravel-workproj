@@ -21,7 +21,7 @@ class TvmazeRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->repository = new TvmazeRepository;
+        $this->repository = new TvmazeRepository();
     }
 
     /**
