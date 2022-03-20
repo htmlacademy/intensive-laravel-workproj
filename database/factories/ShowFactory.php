@@ -25,7 +25,7 @@ class ShowFactory extends Factory
             'title' => $this->faker->words(3, true),
             'title_original' => $this->faker->words(3, true),
             'description' => $this->faker->sentences(3, true),
-            'year' => $this->faker->year,
+            'year' => (int) $this->faker->year,
             'status' => $this->faker->randomElement(['new', 'ended']),
         ];
     }
