@@ -12,7 +12,8 @@ abstract class Base implements Responsable
     public function __construct(
         protected mixed $data = [],
         public int $statusCode = Response::HTTP_OK,
-    ) {}
+    ) {
+    }
 
     /**
      * Create an HTTP response that represents the object.

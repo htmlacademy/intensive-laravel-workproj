@@ -12,7 +12,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     public const ROLE_USER = 0;
     public const ROLE_MODERATOR = 1;
@@ -49,11 +51,13 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function isModerator() {
+    public function isModerator()
+    {
         return $this->role_id === self::ROLE_MODERATOR;
     }
 }

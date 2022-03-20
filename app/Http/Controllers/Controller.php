@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     protected function success($data, ?int $code = Response::HTTP_OK)
     {

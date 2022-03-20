@@ -19,7 +19,7 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (!method_exists(User::class, $role) ) {
+        if (!method_exists(User::class, $role)) {
             throw new \LogicException("Метод $role отсутствует у модели пользователя");
         }
 
