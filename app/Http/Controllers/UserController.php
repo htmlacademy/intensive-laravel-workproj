@@ -27,7 +27,7 @@ class UserController extends Controller
         $user = Auth::user();
         $path = false;
 
-        if($request->hasFile('file')) {
+        if ($request->hasFile('file')) {
             $oldFile = $user->avatar;
             $result = $request->file('file')->store('avatars', 'public');
             $path = $result ? $request->file('file')->hashName() : false;
@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $user->update($params);
 
-        if($path) {
+        if ($path && $oldFile) {
             Storage::disk('public')->delete($oldFile);
         }
 
@@ -142,7 +142,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user->shows()->where('show_id', $show->id)->exists()) {
+        if (!$user->shows()->where('show_id', $show->id)->exists()) {
             throw new RequestException('Сериал не входит список просматриваемых пользователем.');
         }
     }
@@ -153,7 +153,7 @@ class UserController extends Controller
 
         $this->validateWatchingShow($episode->show);
 
-        if($unwatch && !$user->episodes()->where('episode_id', $episode->id)->exists()) {
+        if ($unwatch && !$user->episodes()->where('episode_id', $episode->id)->exists()) {
             throw new RequestException('Эпизод не входит список просматриваемых пользователем.');
         }
     }

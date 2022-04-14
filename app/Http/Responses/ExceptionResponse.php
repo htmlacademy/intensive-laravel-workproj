@@ -7,7 +7,6 @@ use Throwable;
 
 class ExceptionResponse extends Fail
 {
-
     public int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
 
     /**

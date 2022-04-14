@@ -316,7 +316,7 @@ class UserAreaTest extends TestCase
         $show = Show::factory()->create();
         $user->shows()->attach($show);
 
-        $response = $this->postJson(route('user.shows.vote', $show), ['vote' => random_int(1,5)]);
+        $response = $this->postJson(route('user.shows.vote', $show), ['vote' => random_int(1, 5)]);
 
         $response->assertStatus(201);
     }
@@ -332,7 +332,7 @@ class UserAreaTest extends TestCase
         $show = Show::factory()->create();
         $user->shows()->attach($show);
 
-        $response = $this->postJson(route('user.shows.vote', $show), ['vote' => random_int(6,10)]);
+        $response = $this->postJson(route('user.shows.vote', $show), ['vote' => random_int(6, 10)]);
 
         $response->assertStatus(422);
         $response->assertJsonStructure(['errors' => ['vote']]);

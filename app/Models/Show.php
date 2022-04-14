@@ -10,11 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Show extends Model
 {
-    const UPDATED_AT = null;
+    use HasFactory;
+    public const UPDATED_AT = null;
     public const USER_WATCHING_STATUS = 'watching';
     public const USER_WATCHED_STATUS = 'watched';
-
-    use HasFactory;
 
     protected $with = ['genres'];
 
@@ -78,7 +77,7 @@ class Show extends Model
             return null;
         }
 
-        if($this->watched_episodes < $this->total_episodes) {
+        if ($this->watched_episodes < $this->total_episodes) {
             return self::USER_WATCHING_STATUS;
         }
 

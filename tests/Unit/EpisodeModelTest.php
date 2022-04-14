@@ -17,7 +17,7 @@ class EpisodeModelTest extends TestCase
      */
     public function testGetCommentsCount()
     {
-        $value = random_int(2,4);
+        $value = random_int(2, 4);
         User::factory()->create();
         Episode::factory()->for(Show::factory()->create())->hasComments($value)->create();
 

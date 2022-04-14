@@ -67,6 +67,6 @@ class Handler extends ExceptionHandler
 
     protected function prepareJsonResponse($request, Throwable $e)
     {
-        return new ExceptionResponse($e);
+        return (new ExceptionResponse($e))->toResponse($request);
     }
 }

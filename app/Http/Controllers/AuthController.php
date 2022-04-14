@@ -33,7 +33,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if(!Auth::attempt($request->validated())) {
+        if (!Auth::attempt($request->validated())) {
             // todo рассказать о возможности ограничения к-ва запросов на один роут от одного пользователя
             abort(401, trans('auth.failed'));
         }

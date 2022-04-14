@@ -17,7 +17,7 @@ class ShowController extends Controller
      */
     public function index()
     {
-        return $this->paginate(Show::paginate());
+        return $this->paginate(Show::select(['id', 'title'])->paginate(8));
     }
 
     /**

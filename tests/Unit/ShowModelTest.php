@@ -31,7 +31,7 @@ class ShowModelTest extends TestCase
      */
     public function testGetTotalEpisodes()
     {
-        $count = random_int(2,4);
+        $count = random_int(2, 4);
         Show::factory()->has(Episode::factory()->count($count))->create();
 
         $this->assertEquals($count, Show::first()->total_episodes);
@@ -56,7 +56,7 @@ class ShowModelTest extends TestCase
      */
     public function testGetUserVote()
     {
-        $value = random_int(1,5);
+        $value = random_int(1, 5);
         $user = User::factory()->create();
         $show = Show::factory()->create();
         $show->users()->attach($user, ['vote' => $value]);
@@ -145,7 +145,7 @@ class ShowModelTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->assertEquals(Show::USER_WATCHING_STATUS,Show::first()->watch_status);
+        $this->assertEquals(Show::USER_WATCHING_STATUS, Show::first()->watch_status);
     }
 
     /**
@@ -161,6 +161,6 @@ class ShowModelTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->assertEquals(Show::USER_WATCHED_STATUS,Show::first()->watch_status);
+        $this->assertEquals(Show::USER_WATCHED_STATUS, Show::first()->watch_status);
     }
 }
